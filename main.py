@@ -1,13 +1,16 @@
 from src.scaffolder import Scaffolder
 
+
 # Example usage
 if __name__ == "__main__":
-    file1 = "main.py"
-    file2 = "main.py"
+    dir1 = "targets"
+    dir2 = "src"
 
-    scaffolder = Scaffolder(file1, file2)
-    if scaffolder.is_equivalent():
-        print("The files are logically equivalent.")
+    diff = Scaffolder()
+    differences = diff.compare_directories(dir1, dir2)
+    if differences:
+        for file1, file2, diff in differences:
+            print(f"Difference between {file1} and {file2}:")
+            print(diff)
     else:
-        print("The files are not logically equivalent. Here is the diff:")
-        print(scaffolder.get_diff())
+        print("The directories are logically equivalent.")
