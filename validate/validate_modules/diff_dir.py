@@ -2,7 +2,7 @@ import ast
 import difflib
 import os
 
-class IntelligentDiff:
+class DirDiff:
     def __init__(self):
         pass
 
