@@ -1,8 +1,9 @@
 project_structure = {
-    "facade": "car",
-    "subsystems": [
-        "engine",
-        "wheels"
-    ]
+    "Car": {
+        "Engine": {
+            "Cylinders": {},
+            "Pistons": {}
+        },
+        "Chassis": {}
+    }
 }
-
