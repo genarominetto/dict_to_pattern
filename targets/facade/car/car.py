@@ -1,7 +1,7 @@
-from car.subsystems.engine import Engine
-from car.subsystems.wheels import Wheels
+from car.car_modules.engine import Engine
+from car.car_modules.chassis import Chassis
 
-class Car(Engine, Wheels):
+class Car:
     def __init__(self):
-        Engine.__init__(self)
-        Wheels.__init__(self)
+        self.engine = Engine()
+        self.chassis = Chassis()
