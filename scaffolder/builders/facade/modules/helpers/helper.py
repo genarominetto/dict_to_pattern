@@ -9,7 +9,10 @@ class Helper:
         self.lines.append(' ' * (indentation_level * 4) + code_line + '\n')
 
     def write_import_line(self, module, class_name):
-        self.lines.append(f'from {module} import {class_name}\n')
+        if class_name:
+            self.lines.append(f'from {module} import {class_name}\n')
+        else:
+            self.lines.append(f'import {module}\n')
 
     def write_empty_line(self):
         self.lines.append('\n')
