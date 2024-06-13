@@ -35,12 +35,7 @@ class StructureHelper:
                 "file_path": branch_file_path
             })
             for subcomponent in subcomponents:
-                if class_name.lower() == "car":
-                    new_path = f"{current_path}/car_modules"
-                elif class_name.lower() == "engine":
-                    new_path = f"{current_path}/engine_modules"
-                else:
-                    new_path = current_path
+                new_path = f"{current_path}/{class_name.lower()}_modules"
                 self._process_structure(structure[subcomponent], subcomponent, new_path, branch_files, leaf_files)
         else:
             leaf_files.append({
@@ -130,13 +125,17 @@ if __name__ == "__main__":
             "Engine": {
                 "Cylinders": {},
                 "Pistons": {
-                    "PistonRings": {},
+                    "PistonRings": {
+                        "PistonPin": {}
+                    },
+
+
                     "PistonHead": {}
-                },
+                }
             },
             "Chassis": {}
         }
     }
 
-    creator = ProjectCreator("FacadeProjectl", project_structure)
+    creator = ProjectCreator("FacadeProject", project_structure)
     creator.create_project()
