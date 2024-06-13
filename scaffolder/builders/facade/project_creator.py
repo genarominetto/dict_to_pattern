@@ -14,7 +14,7 @@ class StructureHelper:
         test_info = {}
 
         root_class = self._extract_root_class(self.project_structure)
-        self._process_structure(self.project_structure[root_class], root_class, 'car', branch_files, leaf_files)
+        self._process_structure(self.project_structure[root_class], root_class, 'car', [], branch_files, leaf_files)
 
         leaf_ladders = self._get_leaf_ladders(self.project_structure[root_class], root_class)
         test_info = {
@@ -25,18 +25,20 @@ class StructureHelper:
 
         return branch_files, leaf_files, test_info
 
-    def _process_structure(self, structure, class_name, current_path, branch_files, leaf_files):
+    def _process_structure(self, structure, class_name, current_path, ladder, branch_files, leaf_files):
+        new_ladder = ladder + [class_name]
         if structure:
             subcomponents = sorted(list(structure.keys()))
             branch_file_path = f"{current_path}/{class_name.lower()}.py"
+            subcomponent_ladders = [new_ladder + [sub] for sub in subcomponents]
             branch_files.append({
                 "class_name": class_name,
-                "subcomponents": subcomponents,
+                "subcomponents_ladders": subcomponent_ladders,
                 "file_path": branch_file_path
             })
             for subcomponent in subcomponents:
                 new_path = f"{current_path}/{class_name.lower()}_modules"
-                self._process_structure(structure[subcomponent], subcomponent, new_path, branch_files, leaf_files)
+                self._process_structure(structure[subcomponent], subcomponent, new_path, new_ladder, branch_files, leaf_files)
         else:
             leaf_files.append({
                 "class_name": class_name,
@@ -57,7 +59,6 @@ class StructureHelper:
 
     def _extract_root_class(self, structure):
         return next(iter(structure))
-
 class ProjectCreator:
     def __init__(self, project_name, project_structure):
         self.project_name = project_name
@@ -102,7 +103,7 @@ class ProjectCreator:
             dir_path = os.path.dirname(f"{self.project_name}/{branch['file_path']}")
             self._create_directory(dir_path)
             branch_creator = BranchFileCreator(f"{self.project_name}/{branch['file_path']}")
-            branch_creator.create_branch_file(branch['class_name'], branch['subcomponents'])
+            branch_creator.create_branch_file(branch['class_name'], branch['subcomponents_ladders'])
             init_creator = SimpleFileCreator(f"{dir_path}/__init__.py")
             init_creator.create_simple_file('')
 
@@ -124,14 +125,7 @@ if __name__ == "__main__":
         "Car": {
             "Engine": {
                 "Cylinders": {},
-                "Pistons": {
-                    "PistonRings": {
-                        "PistonPin": {}
-                    },
-
-
-                    "PistonHead": {}
-                }
+                "Pistons": {}
             },
             "Chassis": {}
         }
