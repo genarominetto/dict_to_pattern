@@ -1,3 +1,4 @@
+
 # modules/branch_file_creator.py
 
 from modules.helpers.helper import Helper
@@ -13,7 +14,6 @@ class BranchFileCreator:
         class_name = ladder[-1]
         return f"{ladder[0].lower()}.{module_path}.{last_module} import {class_name}"
 
-
     def create_branch_file(self, class_name, subcomponents_ladders):
         # Write imports for subcomponents
         for ladder in subcomponents_ladders:
@@ -27,7 +27,7 @@ class BranchFileCreator:
 
         # Write the initialization of subcomponents
         for ladder in subcomponents_ladders:
-            component_name = ladder[-1].lower()
-            self.helper.write_code_line(2, f'self.{component_name} = {component_name.capitalize()}()')
+            component_name = ladder[-1]
+            self.helper.write_code_line(2, f'self.{component_name.lower()} = {component_name}()')
 
         self.helper.save()
