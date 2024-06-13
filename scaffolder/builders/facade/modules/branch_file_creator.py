@@ -7,13 +7,18 @@ class BranchFileCreator:
         self.filename = filename
         self.helper = Helper(filename)
 
+    def _ladder_to_import_line(self, ladder):
+        module_path = '.'.join([element.lower() + '_modules' for element in ladder[:-1]])
+        last_module = ladder[-1].lower()
+        class_name = ladder[-1]
+        return f"{ladder[0].lower()}.{module_path}.{last_module} import {class_name}"
+
+
     def create_branch_file(self, class_name, subcomponents_ladders):
-        print(f"Subcomponents ladders: {subcomponents_ladders}")
         # Write imports for subcomponents
         for ladder in subcomponents_ladders:
-            module_path = '.'.join([segment.lower() for segment in ladder[:-1]])
-            component = ladder[-1]
-            self.helper.write_import_line(module_path, component)
+            import_line = self._ladder_to_import_line(ladder)
+            self.helper.write_import_line(*import_line.split(' import '))
 
         # Write the class definition
         self.helper.write_empty_line()

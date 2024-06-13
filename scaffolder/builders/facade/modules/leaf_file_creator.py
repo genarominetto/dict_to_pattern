@@ -11,7 +11,7 @@ class LeafFileCreator:
         # Write the class definition
         self.helper.write_code_line(0, f'class {class_name}:')
         self.helper.write_code_line(1, 'def __init__(self):')
-        self.helper.write_code_line(1, 'pass')
+        self.helper.write_code_line(2, 'pass')
         self.helper.write_empty_line()
         self.helper.write_code_line(1, 'def operation(self):')
         self.helper.write_code_line(2, f'print("{class_name} operation executed.")')
