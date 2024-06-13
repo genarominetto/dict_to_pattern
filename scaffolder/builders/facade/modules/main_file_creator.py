@@ -8,21 +8,29 @@ class MainFileCreator:
         self.helper = Helper(filename)
 
     def create_main_file(self, project_structure):
-        root_class = self._extract_root_class(project_structure)
-        subcomponents = self._extract_subcomponents(project_structure[root_class])
+        # Iterate through all root classes to write import lines
+        for root_class in project_structure:
+            self.helper.write_import_line(f"{root_class.lower()}.{root_class.lower()}", root_class)
         
-        self.helper.write_import_line(f"{root_class.lower()}.{root_class.lower()}", root_class)
+        # Write an empty line
         self.helper.write_empty_line()
+        
+        # Write the if __name__ == "__main__" line
         self.helper.write_code_line(0, 'if __name__ == "__main__":')
-        self.helper.write_code_line(1, f'my_{root_class.lower()} = {root_class}()')
 
-        for component in subcomponents:
-            self.helper.write_code_line(1, f'my_{root_class.lower()}.{component}.operation()')
+        # Iterate through all root classes again to write instantiation and operation lines
+        for root_class in project_structure:
+            subcomponents = self._extract_subcomponents(project_structure[root_class])
+            
+            self.helper.write_code_line(1, f'my_{root_class.lower()} = {root_class}()')
+            
+            for component in subcomponents:
+                self.helper.write_code_line(1, f'my_{root_class.lower()}.{component}.operation()')
+            
+            # Write an empty line after each root class instantiation block
+            self.helper.write_empty_line()
 
         self.helper.save()
-
-    def _extract_root_class(self, structure):
-        return next(iter(structure))
 
     def _extract_subcomponents(self, structure, prefix=''):
         components = []
@@ -34,17 +42,4 @@ class MainFileCreator:
                 components.append(current_prefix)
         return components
 
-# Example usage
-if __name__ == "__main__":
-    project_structure = {
-        "Car": {
-            "Engine": {
-                "Cylinders": {},
-                "Pistons": {}
-            },
-            "Chassis": {}
-        }
-    }
-    
-    main_creator = MainFileCreator("main.py")
-    main_creator.create_main_file(project_structure)
+
