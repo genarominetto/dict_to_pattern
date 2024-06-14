@@ -24,8 +24,12 @@ class MainFileCreator:
             
             self.helper.write_code_line(1, f'my_{root_class.lower()} = {root_class}()')
             
-            for component in subcomponents:
-                self.helper.write_code_line(1, f'my_{root_class.lower()}.{component}.operation()')
+            if not subcomponents:
+                # Write operation directly from the root class if there are no subcomponents
+                self.helper.write_code_line(1, f'my_{root_class.lower()}.operation()')
+            else:
+                for component in subcomponents:
+                    self.helper.write_code_line(1, f'my_{root_class.lower()}.{component}.operation()')
             
             # Write an empty line after each root class instantiation block
             self.helper.write_empty_line()
@@ -41,5 +45,3 @@ class MainFileCreator:
             else:
                 components.append(current_prefix)
         return components
-
-

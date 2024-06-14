@@ -138,16 +138,7 @@ if __name__ == "__main__":
                 "NonAlcoholic": {}
             }
         },
-        "Staff": {
-            "Kitchen": {
-                "Chefs": {},
-                "Helpers": {}
-            },
-            "Service": {
-                "Waiters": {},
-                "Managers": {}
-            }
-        }
+        "Staff": {}
     }
 
     creator = FacadeProjectCreator("FacadeProject", project_structure)
