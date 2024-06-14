@@ -58,7 +58,7 @@ class StructureHelper:
         for key, value in sorted(structure.items()):
             self._traverse_structure(value, ladder + [key.lower()], leaf_ladders)
 
-class ProjectCreator:
+class FacadeProjectCreator:
     def __init__(self, project_name, project_structure):
         self.project_name = project_name
         self.project_structure = project_structure
@@ -144,5 +144,5 @@ if __name__ == "__main__":
         }
     }
 
-    creator = ProjectCreator("FacadeProject", project_structure)
+    creator = FacadeProjectCreator("FacadeProject", project_structure)
     creator.create_project()
