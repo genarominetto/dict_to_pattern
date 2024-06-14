@@ -89,7 +89,7 @@ class ProjectCreator:
 
     def _create_pytest_ini(self):
         with open(f"{self.project_name}/pytest.ini", 'w') as pytest_file:
-            pytest_file.write("[pytest]\n")
+            pytest_file.write("[pytest]\npythonpath = .\n")
 
     def _create_tests_directory(self):
         tests_dir = f"{self.project_name}/tests"

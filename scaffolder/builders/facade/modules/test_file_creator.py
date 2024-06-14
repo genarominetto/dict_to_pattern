@@ -20,7 +20,7 @@ class TestFileCreator:
             method_name = "_".join(ladder).lower()
             self.helper.write_empty_line()
             self.helper.write_code_line(0, f"def test_{method_name}_operation({root_class.lower()}):")
-            self.helper.write_code_line(1, f"{root_class.lower()}.{'.'.join(ladder)}.operation()")
+            self.helper.write_code_line(1, f"{'.'.join(ladder)}.operation()")
             self.helper.write_code_line(1, "# Add assertions or checks if needed")
         
         self.helper.save()
