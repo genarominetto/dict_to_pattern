@@ -4,6 +4,7 @@ from modules.leaf_file_creator import LeafFileCreator
 from modules.test_file_creator import TestFileCreator
 from modules.simple_file_creator import SimpleFileCreator
 import os
+import shutil
 
 class StructureHelper:
     def __init__(self, project_structure):
@@ -65,6 +66,10 @@ class FacadeProjectCreator:
         self.helper = StructureHelper(project_structure)
 
     def create_project(self):
+        # Delete the project directory if it exists
+        if os.path.exists(self.project_name):
+            shutil.rmtree(self.project_name)
+
         self._create_directory(self.project_name)
         self._create_main_file()
         self._create_root_init_file()
@@ -75,6 +80,7 @@ class FacadeProjectCreator:
         self._create_branch_files(branch_files)
         self._create_leaf_files(leaf_files)
         self._create_test_files(test_info)
+
 
     def _create_directory(self, path):
         os.makedirs(path, exist_ok=True)
