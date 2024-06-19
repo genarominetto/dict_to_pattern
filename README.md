@@ -45,7 +45,7 @@ This project provides a scaffolding tool for creating code structures based on d
 - [ ] Template Method
 - [ ] Visitor
 
-## Patterns
+# Patterns
 
 # Facade
 **Definition:** Provide a unified interface to a set of interfaces in a subsystem.
@@ -82,7 +82,10 @@ dict_to_pattern
 3. The new program automatically downloads if all tests pass.
 4. To modify the structure of the program, edit the dictionary in the notebook and re-run the cells.
 
-##### Example
+## Example
+**Input:** Dictionary representing the hierarchical structure of the project.
+
+**Output:** Generated file structure adhering to the Facade design pattern.
 
 ###### Input
 ```python
