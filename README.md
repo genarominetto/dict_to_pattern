@@ -83,8 +83,8 @@ dict_to_pattern
 
    [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/GenaroHacker/dict_to_pattern/blob/main/main.ipynb)
 2. Run all cells in the notebook.
-3. The new program automatically downloads if all tests pass.
-4. To modify the structure of the program, edit the dictionary in the notebook and re-run the cells.
+3. The new program is downloaded automatically if all tests pass.
+4. To modify the structure of the program, edit the dictionary `project_structure` in the notebook and re-run the cells.
 
 ## Example
 **Input:** Dictionary representing the hierarchical structure of the project.
