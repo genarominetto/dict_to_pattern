@@ -1,4 +1,5 @@
 # Dict to Pattern Project
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/GenaroHacker/dict_to_pattern/blob/main/main.ipynb)
 
 ## Overview
 This project provides a scaffolding tool for creating code structures based on design patterns from the book **"Design Patterns: Elements of Reusable Object-Oriented Software."** The end in mind is to create a scaffolder for each design pattern in the book.
@@ -73,6 +74,8 @@ dict_to_pattern
 
 ##### How to Use
 1. Open the notebook **main.ipynb** on **Google Colab** in the browser.
+
+   [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/GenaroHacker/dict_to_pattern/blob/main/main.ipynb)
 2. Run all cells in the notebook.
 3. The new program automatically downloads if all tests pass.
 4. To modify the structure of the program, edit the dictionary in the notebook and re-run the cells.
