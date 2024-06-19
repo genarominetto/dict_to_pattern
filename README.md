@@ -2,9 +2,9 @@
 
 This project provides a scaffolding tool for creating complete python programs with tests from simple dictionaries. They are based on design patterns from the book **"Design Patterns: Elements of Reusable Object-Oriented Software."** The end in mind is to create a scaffolder for each design pattern in the book.
 
-Currently, it only supports the Facade design pattern.
+Currently, it only supports the **Facade** design pattern.
 
-To get started, press the "Open in Colab" button and run every cell.
+**To get started, press the "Open in Colab" button and run every cell.**
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/GenaroHacker/dict_to_pattern/blob/main/main.ipynb)
 
