@@ -56,7 +56,7 @@ This project provides a scaffolding tool for creating code structures based on d
 #### Facade
 
 ##### Project Structure
-\`\`\`
+```
 dict_to_pattern
 ├── skaffolders
 │   └── facade
@@ -72,7 +72,7 @@ dict_to_pattern
 ├── jupyter.py
 ├── main.ipynb
 └── README.md
-\`\`\`
+```
 
 ##### How to Use
 1. Open the notebook **main.ipynb** on **Google Colab** in the browser.
@@ -83,7 +83,7 @@ dict_to_pattern
 ##### Example
 
 ###### Input
-\`\`\`python
+```python
 project_structure = {
     "Car": {
         "Engine": {
@@ -94,10 +94,10 @@ project_structure = {
     },
     "Driver": {}
 }
-\`\`\`
+```
 
 ###### Output
-\`\`\`
+```
 FacadeProject
 ├── car
 │   ├── car_modules
@@ -114,7 +114,7 @@ FacadeProject
 │   └── test_driver.py
 ├── main.py
 └── pytest.ini
-\`\`\`
+```
 
 ### Behavioral Patterns
 
