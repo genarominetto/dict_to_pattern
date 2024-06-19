@@ -5,15 +5,16 @@ This project provides a scaffolding tool for creating code structures based on d
 
 ## Table of Contents
 1. [Progress](#progress)
+2. [Patterns](#patterns)
    - [Creational Patterns](#creational-patterns)
    - [Structural Patterns](#structural-patterns)
      - [Facade](#facade)
+       - [Project Structure](#project-structure)
+       - [How to Use](#how-to-use)
+       - [Example](#example)
+         - [Input](#input)
+         - [Output](#output)
    - [Behavioral Patterns](#behavioral-patterns)
-2. [Project Structure](#project-structure)
-3. [How to Use](#how-to-use)
-4. [Example](#example)
-   - [Input](#input)
-   - [Output](#output)
 
 ## Progress
 
@@ -46,8 +47,16 @@ This project provides a scaffolding tool for creating code structures based on d
 - [ ] Template Method
 - [ ] Visitor
 
-## Project Structure
-```
+## Patterns
+
+### Creational Patterns
+
+### Structural Patterns
+
+#### Facade
+
+##### Project Structure
+\`\`\`
 dict_to_pattern
 ├── skaffolders
 │   └── facade
@@ -63,18 +72,18 @@ dict_to_pattern
 ├── jupyter.py
 ├── main.ipynb
 └── README.md
-```
+\`\`\`
 
-## How to Use
+##### How to Use
 1. Open the notebook **main.ipynb** on **Google Colab** in the browser.
 2. Run all cells in the notebook.
 3. The new program automatically downloads if all tests pass.
 4. To modify the structure of the program, edit the dictionary in the notebook and re-run the cells.
 
-## Example
+##### Example
 
-### Input
-```python
+###### Input
+\`\`\`python
 project_structure = {
     "Car": {
         "Engine": {
@@ -85,10 +94,10 @@ project_structure = {
     },
     "Driver": {}
 }
-```
+\`\`\`
 
-### Output
-```
+###### Output
+\`\`\`
 FacadeProject
 ├── car
 │   ├── car_modules
@@ -105,4 +114,7 @@ FacadeProject
 │   └── test_driver.py
 ├── main.py
 └── pytest.ini
-```
+\`\`\`
+
+### Behavioral Patterns
+
