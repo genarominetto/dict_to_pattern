@@ -6,15 +6,12 @@ This project provides a scaffolding tool for creating code structures based on d
 ## Table of Contents
 1. [Progress](#progress)
 2. [Patterns](#patterns)
-   - [Creational Patterns](#creational-patterns)
-   - [Structural Patterns](#structural-patterns)
-     - [Facade](#facade)
-       - [Project Structure](#project-structure)
-       - [How to Use](#how-to-use)
-       - [Example](#example)
-         - [Input](#input)
-         - [Output](#output)
-   - [Behavioral Patterns](#behavioral-patterns)
+   - [Facade](#facade)
+     - [Project Structure](#project-structure)
+     - [How to Use](#how-to-use)
+     - [Example](#example)
+       - [Input](#input)
+       - [Output](#output)
 
 ## Progress
 
