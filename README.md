@@ -1,7 +1,7 @@
 # Dict to Pattern Project
 
 ## Overview
-This project provides a scaffolding tool for creating code structures based on design patterns from the book **"Design Patterns: Elements of Reusable Object-Oriented Software."** The goal is to create a scaffolder for each design pattern in the book.
+This project provides a scaffolding tool for creating code structures based on design patterns from the book **"Design Patterns: Elements of Reusable Object-Oriented Software."** The end in mind is to create a scaffolder for each design pattern in the book.
 
 ## Table of Contents
 1. [Progress](#progress)
