@@ -104,7 +104,7 @@ project_structure = {
     "Driver": {}
 }
 ```
-
+#**Note:** Any tree structure is supported; modules with an empty dict value are considered leaf modules.
 ###### Output
 ```
 FacadeProject
@@ -124,4 +124,4 @@ FacadeProject
 ├── main.py
 └── pytest.ini
 ```
-
+#**Note:** In this example, the `main.py` file is considered the facade, not the car or the driver modules. Example methods are implemented by the leaf modules.
