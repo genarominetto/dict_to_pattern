@@ -1,6 +1,6 @@
 # Dict to Pattern
 
-This project provides a scaffolding tool for creating complete python programs with tests from simple dictionaries. They are based on design patterns from the book **"Design Patterns: Elements of Reusable Object-Oriented Software."** The end in mind is to create a scaffolder for each design pattern in the book.
+This project provides a scaffolding tool to create complete python programs with tests from simple dictionaries. They are based on design patterns from the book **"Design Patterns: Elements of Reusable Object-Oriented Software."** The end in mind is to create a scaffolder for each design pattern in the book.
 
 Currently, it only supports the **Facade** design pattern.
 
