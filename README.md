@@ -104,7 +104,7 @@ project_structure = {
     "Driver": {}
 }
 ```
-#**Note:** Any tree structure is supported; modules with an empty dict value are considered leaf modules.
+#**Note:** Any tree structure is supported. Modules with an empty dict value are considered leaf modules.
 ###### Output
 ```
 FacadeProject
