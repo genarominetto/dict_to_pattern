@@ -47,11 +47,13 @@ This project provides a scaffolding tool for creating code structures based on d
 
 ## Patterns
 
-### Creational Patterns
+# Facade
+**Definition:** Provide a unified interface to a set of interfaces in a subsystem.
 
-### Structural Patterns
+**Aspects that Vary:** Interface to a subsystem.
 
-#### Facade
+**Participants:** Facade, Subsystem classes.
+
 
 ##### Project Structure
 ```
@@ -115,6 +117,4 @@ FacadeProject
 ├── main.py
 └── pytest.ini
 ```
-
-### Behavioral Patterns
 
