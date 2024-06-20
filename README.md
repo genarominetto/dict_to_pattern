@@ -59,7 +59,6 @@ Currently, it only supports the **Facade** design pattern.
 
 
 
-```
 
 ##### How to Use
 1. Open the notebook **main.ipynb** on **Google Colab** in the browser.
