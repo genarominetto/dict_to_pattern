@@ -12,7 +12,6 @@ Currently, it only supports the **Facade** design pattern.
 1. [Progress](#progress)
 2. [Patterns](#patterns)
    - [Facade](#facade)
-     - [Project Structure](#project-structure)
      - [How to Use](#how-to-use)
      - [Example](#example)
        - [Input](#input)
@@ -59,23 +58,7 @@ Currently, it only supports the **Facade** design pattern.
 **Participants:** Facade, Subsystem classes.
 
 
-##### Project Structure
-```
-dict_to_pattern
-├── skaffolders
-│   └── facade
-│       ├── modules
-│       │   ├── helpers
-│       │   │   └── helper.py
-│       │   ├── branch_file_creator.py
-│       │   ├── leaf_file_creator.py
-│       │   ├── main_file_creator.py
-│       │   ├── simple_file_creator.py
-│       │   └── test_file_creator.py
-│       └── project_creator.py
-├── jupyter.py
-├── main.ipynb
-└── README.md
+
 ```
 
 ##### How to Use
