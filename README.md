@@ -69,11 +69,12 @@ Currently, it only supports the **Facade** design pattern.
 4. To modify the structure of the program, edit the dictionary `project_structure` in the notebook and re-run the cells.
 
 ## Example
-**Input:** Dictionary representing the hierarchical structure of the project.
 
-**Output:** Generated file structure adhering to the Facade design pattern.
+
+
 
 ###### Input
+**Input:** Dictionary representing the hierarchical structure of the project.
 ```python
 project_structure = {
     "Car": {
@@ -88,6 +89,7 @@ project_structure = {
 ```
 #**Note:** Any tree structure is supported. Modules with an empty dict value are considered leaf modules.
 ###### Output
+**Output:** Generated file structure adhering to the Facade design pattern.
 ```
 FacadeProject
 ├── car
@@ -110,6 +112,7 @@ FacadeProject
 
 
 # What to expect?
+### Generated Files
 
 Main File (main.py):
 The main file initializes core objects and invokes their primary operations.
