@@ -3,6 +3,8 @@
 import os
 import subprocess
 import sys
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
+
 from dict_to_pattern.skaffolders.facade.project_creator import FacadeProjectCreator
 
 def run_command(command):
@@ -38,4 +40,3 @@ def scaffold_and_test():
 
 if __name__ == "__main__":
     scaffold_and_test()
-
