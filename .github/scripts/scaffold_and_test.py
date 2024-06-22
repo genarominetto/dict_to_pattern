@@ -4,11 +4,17 @@ import os
 import subprocess
 import sys
 
-# Find the root directory dynamically
+# Find the root directory dynamically and add it to sys.path
 root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
 sys.path.insert(0, root_dir)
 
-from dict_to_pattern.skaffolders.facade.project_creator import FacadeProjectCreator
+# Now try to import the FacadeProjectCreator
+try:
+    from dict_to_pattern.skaffolders.facade.project_creator import FacadeProjectCreator
+except ModuleNotFoundError as e:
+    print(f"Error: {e}")
+    print("Current sys.path:", sys.path)
+    sys.exit(1)
 
 def run_command(command):
     process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
