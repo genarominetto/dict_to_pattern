@@ -3,9 +3,11 @@
 import os
 import subprocess
 import sys
+
+# Ensure the dict_to_pattern module can be found
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
 
-from dict_to_pattern.skaffolders.facade.project_creator import FacadeProjectCreator
+from skaffolders.facade.project_creator import FacadeProjectCreator
 
 def run_command(command):
     process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
