@@ -108,7 +108,6 @@ FacadeProject
 ├── main.py
 └── pytest.ini
 ```
-#**Note:** In this example, the `main.py` file is considered the facade, not the car or the driver modules. Example methods are implemented by the leaf modules.
 
 
 # What to expect?
