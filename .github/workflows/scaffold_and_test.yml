@@ -30,34 +30,8 @@ jobs:
       run: |
         pip install .
 
-    - name: Run scaffolding tool
-      run: |
-        mkdir -p skaffolders/facade
-        cd skaffolders/facade
-        echo "
-        from dict_to_pattern.skaffolders.facade.project_creator import FacadeProjectCreator
-
-        project_name = 'FacadeProject'
-        project_structure = {
-            'Car': {
-                'Engine': {
-                    'Cylinders': {},
-                    'Pistons': {}
-                },
-                'Chassis': {}
-            },
-            'Driver': {}
-        }
-
-        creator = FacadeProjectCreator(project_name, project_structure)
-        creator.create_project()
-        " > create_project.py
-        python create_project.py
-
-    - name: Run tests
-      run: |
-        cd FacadeProject
-        pytest --junitxml=results.xml
+    - name: Run scaffold and test script
+      run: python .github/scripts/scaffold_and_test.py
 
     - name: Upload test results
       if: always()
@@ -69,3 +43,4 @@ jobs:
     - name: Check for test failures
       if: failure()
       run: exit 1
+
