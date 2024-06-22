@@ -4,17 +4,11 @@ import os
 import subprocess
 import sys
 
-# Find the root directory dynamically and add it to sys.path
-root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
-sys.path.insert(0, root_dir)
+# Ensure the dict_to_pattern module can be found
+repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
+sys.path.insert(0, repo_root)
 
-# Now try to import the FacadeProjectCreator
-try:
-    from dict_to_pattern.skaffolders.facade.project_creator import FacadeProjectCreator
-except ModuleNotFoundError as e:
-    print(f"Error: {e}")
-    print("Current sys.path:", sys.path)
-    sys.exit(1)
+from dict_to_pattern.skaffolders.facade.project_creator import FacadeProjectCreator
 
 def run_command(command):
     process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -43,7 +37,7 @@ def scaffold_and_test():
     creator.create_project()
 
     # Run tests
-    os.chdir(os.path.join(root_dir, project_name))
+    os.chdir(os.path.join(repo_root, project_name))
     test_result = run_command("pytest --junitxml=results.xml")
     print(test_result)
 
