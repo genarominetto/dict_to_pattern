@@ -107,3 +107,78 @@ FacadeProject
 └── pytest.ini
 ```
 #**Note:** In this example, the `main.py` file is considered the facade, not the car or the driver modules. Example methods are implemented by the leaf modules.
+
+
+# What to expect?
+
+Main File (main.py):
+The main file initializes core objects and invokes their primary operations.
+
+```python
+from car.car import Car
+from driver.driver import Driver
+
+if __name__ == "__main__":
+    my_car = Car()
+    my_car.engine.cylinders.operation()
+    my_car.engine.pistons.operation()
+    my_car.chassis.operation()
+
+    my_driver = Driver()
+    my_driver.operation()
+
+```
+
+Branch File (car.py):
+A branch file defines the structure of complex objects, containing the initialization of various components.
+
+```python
+from car.car_modules.chassis import Chassis
+from car.car_modules.engine import Engine
+
+class Car:
+    def __init__(self):
+        self.chassis = Chassis()
+        self.engine = Engine()
+```
+Leaf File (cylinders.py):
+A leaf file represents a simple component, performing basic operations.
+
+```python
+class Cylinders:
+    def __init__(self):
+        pass
+
+    def operation(self):
+        print("Cylinders operation executed.")
+
+```
+
+Test File (test_car.py):
+A test file contains unit tests for verifying the functionality of the code using pytest.
+
+```python
+import pytest
+from car.car import Car
+
+@pytest.fixture
+def car():
+    return Car()
+
+def test_car_chassis_operation(car):
+    car.chassis.operation()
+    # Add assertions or checks if needed
+
+def test_car_engine_cylinders_operation(car):
+    car.engine.cylinders.operation()
+    # Add assertions or checks if needed
+
+def test_car_engine_pistons_operation(car):
+    car.engine.pistons.operation()
+    # Add assertions or checks if needed
+
+```
+
+
+
+
