@@ -4,11 +4,11 @@ import os
 import subprocess
 import sys
 
-# Change directory to ensure correct import paths
-os.chdir(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../dict_to_pattern/skaffolders/facade')))
-sys.path.insert(0, os.getcwd())
+# Find the root directory dynamically
+root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
+sys.path.insert(0, root_dir)
 
-from project_creator import FacadeProjectCreator
+from dict_to_pattern.skaffolders.facade.project_creator import FacadeProjectCreator
 
 def run_command(command):
     process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -37,7 +37,7 @@ def scaffold_and_test():
     creator.create_project()
 
     # Run tests
-    os.chdir(os.path.join('..', '..', '..', project_name))
+    os.chdir(os.path.join(root_dir, project_name))
     test_result = run_command("pytest --junitxml=results.xml")
     print(test_result)
 
