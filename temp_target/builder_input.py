@@ -1,6 +1,6 @@
 project_structure = {
-    "product": "house",
-    "types": ["modern", "victorian"],
-    "abstract_parts": ["foundation", "structure"],
-    "concrete_parts": ["roof", "interior"]
+    "product": "VacationHouse",
+    "types": ["Beach", "Mountain"],
+    "abstract_parts": ["FoundationBase", "StructureBase"],
+    "concrete_parts": ["InteriorDesign", "OutdoorDesign"]
 }
