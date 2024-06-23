@@ -1,12 +1,11 @@
-
 # modules/branch_file_creator.py
 
 from modules.helpers.helper import Helper
 
 class BranchFileCreator:
-    def __init__(self, filename):
+    def __init__(self, filename, root_module=None):
         self.filename = filename
-        self.helper = Helper(filename)
+        self.helper = Helper(filename, root_module)
 
     def _ladder_to_import_line(self, ladder):
         module_path = '.'.join([element.lower() + '_modules' for element in ladder[:-1]])

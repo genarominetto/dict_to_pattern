@@ -3,9 +3,9 @@
 from modules.helpers.helper import Helper
 
 class LeafFileCreator:
-    def __init__(self, filename):
+    def __init__(self, filename, root_module=None):
         self.filename = filename
-        self.helper = Helper(filename)
+        self.helper = Helper(filename, root_module)
 
     def create_leaf_file(self, class_name):
         # Write the class definition
@@ -20,5 +20,5 @@ class LeafFileCreator:
 
 # Example usage for LeafFileCreator
 if __name__ == "__main__":
-    leaf_creator = LeafFileCreator("chassis.py")
+    leaf_creator = LeafFileCreator("chassis.py", "facade_project")
     leaf_creator.create_leaf_file("Chassis")
