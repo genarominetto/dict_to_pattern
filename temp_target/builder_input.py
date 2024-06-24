@@ -1,8 +1,7 @@
 project_structure = {
     "product": "VacationHouse",
     "types": ["OceanBeach", "RockMountain"],
-    "parent_parts": ["FoundationBase", "StructureBase"],
-    "child_parts": ["InteriorDesign", "OutdoorDesign"],
+    "parts": ["FoundationBase", "InteriorDesign"],
     "parent_steps": ["prepare_the_foundation", "inspect_foundation"],
     "child_steps": ["build_the_structure", "finalize_details"]
 }
@@ -25,9 +24,7 @@ project/
 │
 ├── parts/
 │   ├── foundation_base.py
-│   ├── structure_base.py
 │   ├── interior_design.py
-│   └── outdoor_design.py
 │
 ├── director/
 │   └── director.py
