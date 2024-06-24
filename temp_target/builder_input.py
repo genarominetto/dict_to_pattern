@@ -2,8 +2,10 @@ project_structure = {
     "product": "VacationHouse",
     "types": ["OceanBeach", "RockMountain"],
     "abstract_parts": ["FoundationBase", "StructureBase"],
-    "concrete_parts": ["InteriorDesign", "OutdoorDesign"]
+    "concrete_parts": ["InteriorDesign", "OutdoorDesign"],
+    "construction_steps": ["prepare_the_foundation", "build_the_structure"]
 }
+
 
 
 
