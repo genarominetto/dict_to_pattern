@@ -6,7 +6,7 @@ Currently, it only supports the **Facade** design pattern.
 
 ## TO GET STARTED, **PRESS** THE "OPEN IN COLAB" BUTTON AND **RUN** EVERY CELL.
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/GenaroHacker/dict_to_pattern/blob/main/main.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/genarominetto/dict_to_pattern/blob/main/main.ipynb)
 
 ## Table of Contents
 1. [Progress](#progress)
@@ -63,7 +63,7 @@ Currently, it only supports the **Facade** design pattern.
 ##### How to Use
 1. Open the notebook **main.ipynb** on **Google Colab** in the browser.
 
-   [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/GenaroHacker/dict_to_pattern/blob/main/main.ipynb)
+   [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/genarominetto/dict_to_pattern/blob/main/main.ipynb)
 2. Run all cells in the notebook.
 3. The new program is downloaded automatically if all tests pass.
 4. To modify the structure of the program, edit the dictionary `project_structure` in the notebook and re-run the cells.
