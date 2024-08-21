@@ -86,7 +86,7 @@ class BuilderProjectCreator:
 
         # Create the abstract builder file
         filenames = self.helper.create_filenames()
-        abstract_builder_filename = os.path.join(self.project_name, "vacation_house_builder", "builders", "abstract", filenames['abstract_builder'])
+        abstract_builder_filename = os.path.join(builder_root_dir, "builders", "abstract", filenames['abstract_builder'])
         abstract_builder_creator = AbstractBuilderFileCreator(abstract_builder_filename, self.root_module)
         abstract_builder_creator.create_abstract_builder_file(self.project_structure)
 
@@ -125,13 +125,13 @@ class BuilderProjectCreator:
 
 if __name__ == "__main__":
     project_structure = {
-        "product": "VacationHouse",
-        "types": ["OceanBeach", "RockMountain"],
-        "parts": ["FoundationBase", "InteriorDesign"],
-        "parent_steps": ["prepare_the_foundation", "inspect_foundation"],
-        "child_steps": ["build_the_structure", "finalize_details"]
+        "product": "Car",
+        "types": ["Sedan", "SUV"],
+        "parts": ["Engine", "Wheels", "Body"],
+        "parent_steps": ["assemble_chassis", "install_engine"],
+        "child_steps": ["attach_wheels", "paint_body"]
     }
 
     root_module = ""  # Define the root module
-    creator = BuilderProjectCreator("BuilderProject", project_structure, root_module)
+    creator = BuilderProjectCreator("CarProject", project_structure, root_module)
     creator.create_project()

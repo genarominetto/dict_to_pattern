@@ -37,7 +37,7 @@ class AbstractBuilderFileCreator:
 
         # Write the get_vacation_house method
         self.helper.write_empty_line()
-        self.helper.write_code_line(1, 'def get_vacation_house(self):')
+        self.helper.write_code_line(1, f'def get_{product_name_snake}(self):')
         self.helper.write_code_line(2, f'return self.{product_name_snake}')
 
         # Save the file

@@ -25,12 +25,15 @@ class ConcreteBuilderFileCreator:
         self.helper.write_code_line(1, f'def __init__(self):')
         self.helper.write_code_line(2, f'super().__init__("{type_name}")')
         
+        # Initialize the product
+        self.helper.write_code_line(2, f'self.{product_name_snake} = {product_name}("{type_name}")')
+
         # Declare the product parts and set them
         for part in project_structure['parts']:
             part_name_snake = self._convert_to_snake_case(part)
             self.helper.write_code_line(2, f'self.{part_name_snake} = {part}()')
             method_name = f'set_{part_name_snake}'
-            self.helper.write_code_line(2, f'self.vacation_house.{method_name}(self.{part_name_snake})')
+            self.helper.write_code_line(2, f'self.{product_name_snake}.{method_name}(self.{part_name_snake})')
 
         # Implement the child steps as methods (without hardcoding part-related logic)
         for step in project_structure["child_steps"]:

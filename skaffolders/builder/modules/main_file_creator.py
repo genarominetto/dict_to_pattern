@@ -25,8 +25,8 @@ class MainFileCreator:
             builder_name_snake = self._convert_to_snake_case(builder)
             self.helper.write_code_line(1, f'{builder_name_snake}_builder = {builder}{product_name}Builder()')
             self.helper.write_code_line(1, f'director = Director({builder_name_snake}_builder)')
-            self.helper.write_code_line(1, f'{builder_name_snake}_house = director.construct_{product_name_snake}()')
-            self.helper.write_code_line(1, f'print({builder_name_snake}_house)')
+            self.helper.write_code_line(1, f'{builder_name_snake}_{product_name_snake} = director.construct_{product_name_snake}()')
+            self.helper.write_code_line(1, f'print({builder_name_snake}_{product_name_snake})')
             self.helper.write_empty_line()
 
         # Write the entry point check
