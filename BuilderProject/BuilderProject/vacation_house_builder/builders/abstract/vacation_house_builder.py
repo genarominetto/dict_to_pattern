@@ -1,6 +1,6 @@
 from abc import ABC
 from abc import abstractmethod
-from vacation_house_builder.product.vacation_house import VacationHouse
+from dir_a.dir_b.vacation_house_builder.product.vacation_house import VacationHouse
 
 class VacationHouseBuilder(ABC):
     def __init__(self, vacation_house_type):

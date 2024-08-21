@@ -1,6 +1,6 @@
-from vacation_house_builder.builders.abstract.vacation_house_builder import VacationHouseBuilder
-from vacation_house_builder.product.vacation_house_parts.foundation_base import FoundationBase
-from vacation_house_builder.product.vacation_house_parts.interior_design import InteriorDesign
+from dir_a.dir_b.vacation_house_builder.builders.abstract.vacation_house_builder import VacationHouseBuilder
+from dir_a.dir_b.vacation_house_builder.product.vacation_house_parts.foundation_base import FoundationBase
+from dir_a.dir_b.vacation_house_builder.product.vacation_house_parts.interior_design import InteriorDesign
 
 class RockMountainVacationHouseBuilder(VacationHouseBuilder):
     def __init__(self):

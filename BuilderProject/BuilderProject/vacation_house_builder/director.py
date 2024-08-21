@@ -1,4 +1,4 @@
-from vacation_house_builder.builders.abstract.vacation_house_builder import VacationHouseBuilder
+from dir_a.dir_b.vacation_house_builder.builders.abstract.vacation_house_builder import VacationHouseBuilder
 
 class Director:
     def __init__(self, builder: VacationHouseBuilder):

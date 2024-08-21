@@ -1,6 +1,6 @@
 import pytest
-from vacation_house_builder.builders.rock_mountain_vacation_house_builder import RockMountainVacationHouseBuilder
-from vacation_house_builder.director import Director
+from dir_a.dir_b.vacation_house_builder.builders.rock_mountain_vacation_house_builder import RockMountainVacationHouseBuilder
+from dir_a.dir_b.vacation_house_builder.director import Director
 
 def test_rock_mountain_vacation_house():
     builder = RockMountainVacationHouseBuilder()

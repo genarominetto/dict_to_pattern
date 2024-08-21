@@ -7,6 +7,7 @@ from modules.main_file_creator import MainFileCreator
 from modules.product_file_creator import ProductFileCreator
 from modules.product_part_file_creator import ProductPartFileCreator
 from modules.test_file_creator import TestFileCreator
+from modules.simple_file_creator import SimpleFileCreator
 
 class StructureHelper:
     def __init__(self, project_structure, root_module):
@@ -71,6 +72,17 @@ class BuilderProjectCreator:
 
         # Create the complete directory structure
         builder_concrete_dir, builder_root_dir, product_root_dir, parts_dir, test_root_dir = self.helper.create_directory_structure(self.project_name)
+
+        # Create __init__.py files in all directories
+        SimpleFileCreator(os.path.join(builder_root_dir, "__init__.py")).create_simple_file("")
+        SimpleFileCreator(os.path.join(product_root_dir, "__init__.py")).create_simple_file("")
+        SimpleFileCreator(os.path.join(parts_dir, "__init__.py")).create_simple_file("")
+        SimpleFileCreator(os.path.join(builder_concrete_dir, "__init__.py")).create_simple_file("")
+        SimpleFileCreator(os.path.join(test_root_dir, "__init__.py")).create_simple_file("")
+
+        # Create the pytest.ini file
+        pytest_ini_path = os.path.join(self.project_name, "pytest.ini")
+        SimpleFileCreator(pytest_ini_path).create_simple_file("[pytest]\npythonpath = .\n")
 
         # Create the abstract builder file
         filenames = self.helper.create_filenames()
