@@ -132,6 +132,6 @@ if __name__ == "__main__":
         "child_steps": ["build_the_structure", "finalize_details"]
     }
 
-    root_module = "dir_a.dir_b"  # Define the root module
+    root_module = ""  # Define the root module
     creator = BuilderProjectCreator("BuilderProject", project_structure, root_module)
     creator.create_project()
