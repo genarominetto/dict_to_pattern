@@ -3,10 +3,10 @@ import shutil
 from modules.abstract_builder_file_creator import AbstractBuilderFileCreator
 from modules.concrete_builder_file_creator import ConcreteBuilderFileCreator
 from modules.director_file_creator import DirectorFileCreator
-from modules.main_file_creator import MainFileCreator
+from modules.main_file_creator_bldr import MainFileCreator
 from modules.product_file_creator import ProductFileCreator
 from modules.product_part_file_creator import ProductPartFileCreator
-from modules.test_file_creator import TestFileCreator
+from modules.test_file_creator_bldr import TestFileCreator
 from modules.simple_file_creator import SimpleFileCreator
 
 class StructureHelper:
