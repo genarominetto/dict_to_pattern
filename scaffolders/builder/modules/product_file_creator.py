@@ -30,15 +30,12 @@ class ProductFileCreator:
         # Write the __str__ method
         self.helper.write_empty_line()
         self.helper.write_code_line(1, f'def __str__(self):')
-        self.helper.write_code_line(2, f'return (f"{product_name} of type {{self.{product_name_snake}_type}} with "')
-        
+
         # Write the string representation for each part
-        part_strings = []
-        for part in project_structure["parts"]:
-            part_name_snake = self._convert_to_snake_case(part)
-            part_strings.append(f'f"{part_name_snake} {{self.{part_name_snake}}} "')
-        
-        self.helper.write_code_line(3, f'{" + ".join(part_strings)} + "."')
+        part_strings = [f"{part_name_snake} {{self.{self._convert_to_snake_case(part)}}}" for part in project_structure["parts"]]
+
+        self.helper.write_code_line(2, f'return (f"{product_name} of type {{self.{product_name_snake}_type}} with "')
+        self.helper.write_code_line(3, f'{" ".join(part_strings)} + " .")')
 
         # Save the file
         self.helper.save()
