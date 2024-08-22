@@ -48,3 +48,40 @@ def run_tests(test_file_path):
     print(result.stderr.decode())
     return result.returncode == 0
 
+
+import os
+
+def print_directory_tree(directory: str):
+    """
+    Prints a directory tree starting at the specified directory, listing directories first,
+    and ignoring files and directories that start with an underscore ('_') or any hidden files.
+    """
+    file_count = 0
+    dir_count = 0
+    
+    def _tree(dir_path, indent=''):
+        nonlocal file_count, dir_count
+        # Get list of directories and files
+        items = sorted(os.listdir(dir_path))
+        dirs = [d for d in items if os.path.isdir(os.path.join(dir_path, d)) and not d.startswith('_') and not d.startswith('.')]
+        files = [f for f in items if os.path.isfile(os.path.join(dir_path, f)) and not f.startswith('_') and not f.startswith('.')]
+        
+        # Increment directory count
+        dir_count += len(dirs)
+        file_count += len(files)
+        
+        # Print directories
+        for i, d in enumerate(dirs):
+            print(f'{indent}├── {d}')
+            _tree(os.path.join(dir_path, d), indent + '│   ')
+        
+        # Print files
+        for i, f in enumerate(files):
+            if i == len(files) - 1:
+                print(f'{indent}└── {f}')
+            else:
+                print(f'{indent}├── {f}')
+    
+    print('.')
+    _tree(directory)
+    print(f'\n{dir_count} directories, {file_count} files')
