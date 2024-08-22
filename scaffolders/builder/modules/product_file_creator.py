@@ -31,11 +31,13 @@ class ProductFileCreator:
         self.helper.write_empty_line()
         self.helper.write_code_line(1, f'def __str__(self):')
 
-        # Write the string representation for each part
+        # Construct the string representation of the product and its parts
+        # List comprehension creates a formatted string for each part
         part_strings = [f"{self._convert_to_snake_case(part)} {{self.{self._convert_to_snake_case(part)}}}" for part in project_structure["parts"]]
 
-        self.helper.write_code_line(2, f'return (f"{product_name} of type {{self.{product_name_snake}_type}} with " '
-                                      f'{" , ".join(part_strings)} + " .")')
+        # The final return statement combines these strings with proper punctuation and spacing
+        self.helper.write_code_line(2, f'return (f"{product_name} of type {{self.{product_name_snake}_type}} with "'
+                                      f' + ", ".join([{", ".join(part_strings)}]) + ".")')
 
         # Save the file
         self.helper.save()
