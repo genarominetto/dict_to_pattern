@@ -34,8 +34,8 @@ class ProductFileCreator:
         # Write the string representation for each part
         part_strings = [f"{self._convert_to_snake_case(part)} {{self.{self._convert_to_snake_case(part)}}}" for part in project_structure["parts"]]
 
-        # Correctly join the part strings with spaces
-        self.helper.write_code_line(2, f'return (f"{product_name} of type {{self.{product_name_snake}_type}} with " ' + ' + ". " + '.join(part_strings) + ' + " .")')
+        self.helper.write_code_line(2, f'return (f"{product_name} of type {{self.{product_name_snake}_type}} with " '
+                                      f'{" , ".join(part_strings)} + " .")')
 
         # Save the file
         self.helper.save()
