@@ -25,13 +25,19 @@ class StructureHelper:
         # Convert names to snake_case
         product_name_snake = self._convert_to_snake_case(product_name)
 
+        # Define the root directory for the module
+        if self.root_module:
+            root_module_path = os.path.join(root_path, *self.root_module.split('.'))
+        else:
+            root_module_path = root_path
+
         # Define dynamic directory names based on the project structure
-        builder_root_dir = os.path.join(root_path, f"{product_name_snake}_builder")
+        builder_root_dir = os.path.join(root_module_path, f"{product_name_snake}_builder")
         product_root_dir = os.path.join(builder_root_dir, "product")
         parts_dir = os.path.join(product_root_dir, f"{product_name_snake}_parts")
         builder_abstract_dir = os.path.join(builder_root_dir, "builders", "abstract")
         builder_concrete_dir = os.path.join(builder_root_dir, "builders")
-        test_root_dir = os.path.join(root_path, "tests")
+        test_root_dir = os.path.join(root_module_path, "tests")
 
         # Create directories dynamically
         os.makedirs(builder_abstract_dir, exist_ok=True)
@@ -39,7 +45,7 @@ class StructureHelper:
         os.makedirs(builder_concrete_dir, exist_ok=True)
         os.makedirs(test_root_dir, exist_ok=True)
 
-        return builder_concrete_dir, builder_root_dir, product_root_dir, parts_dir, test_root_dir
+        return builder_concrete_dir, builder_root_dir, product_root_dir, parts_dir, test_root_dir, root_module_path
 
     def create_filenames(self):
         # Generate filenames dynamically based on the project structure
@@ -71,7 +77,7 @@ class BuilderProjectCreator:
         os.makedirs(self.project_name, exist_ok=True)
 
         # Create the complete directory structure
-        builder_concrete_dir, builder_root_dir, product_root_dir, parts_dir, test_root_dir = self.helper.create_directory_structure(self.project_name)
+        builder_concrete_dir, builder_root_dir, product_root_dir, parts_dir, test_root_dir, root_module_path = self.helper.create_directory_structure(self.project_name)
 
         # Create __init__.py files in all directories
         SimpleFileCreator(os.path.join(builder_root_dir, "__init__.py")).create_simple_file("")
@@ -123,3 +129,15 @@ class BuilderProjectCreator:
         main_creator = MainFileCreator(main_filename, self.root_module)
         main_creator.create_main_file(self.project_structure)
 
+if __name__ == "__main__":
+    project_structure = {
+        "product": "Car",
+        "types": ["Sedan", "SUV"],
+        "parts": ["Engine", "Wheels", "Body"],
+        "parent_steps": ["assemble_chassis", "install_engine"],
+        "child_steps": ["attach_wheels", "paint_body"]
+    }
+
+    root_module = "apple.banana"  # Define the root module
+    creator = BuilderProjectCreator("CarProject", project_structure, root_module)
+    creator.create_project()
