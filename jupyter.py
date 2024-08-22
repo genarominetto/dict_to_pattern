@@ -49,8 +49,6 @@ def run_tests(test_file_path):
     return result.returncode == 0
 
 
-import os
-
 def print_directory_tree(directory: str):
     """
     Prints a directory tree starting at the specified directory, listing directories first,
