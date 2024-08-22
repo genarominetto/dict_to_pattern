@@ -123,15 +123,3 @@ class BuilderProjectCreator:
         main_creator = MainFileCreator(main_filename, self.root_module)
         main_creator.create_main_file(self.project_structure)
 
-if __name__ == "__main__":
-    project_structure = {
-        "product": "Car",
-        "types": ["Sedan", "SUV"],
-        "parts": ["Engine", "Wheels", "Body"],
-        "parent_steps": ["assemble_chassis", "install_engine"],
-        "child_steps": ["attach_wheels", "paint_body"]
-    }
-
-    root_module = ""  # Define the root module
-    creator = BuilderProjectCreator("CarProject", project_structure, root_module)
-    creator.create_project()
