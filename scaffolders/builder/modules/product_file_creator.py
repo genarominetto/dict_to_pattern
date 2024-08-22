@@ -36,9 +36,9 @@ class ProductFileCreator:
         part_strings = []
         for part in project_structure["parts"]:
             part_name_snake = self._convert_to_snake_case(part)
-            part_strings.append(f'f"{part_name_snake} {{self.{part_name_snake}}}"')
-
-        self.helper.write_code_line(3, f'{" + ".join(part_strings)} + ".")')
+            part_strings.append(f'f"{part_name_snake} {{self.{part_name_snake}}} "')
+        
+        self.helper.write_code_line(3, f'{" + ".join(part_strings)} + "."')
 
         # Save the file
         self.helper.save()
