@@ -3,7 +3,7 @@
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/genarominetto/dict_to_pattern/blob/main/main.ipynb)
 
 
-### Builder
+### Builder Pattern
 
 - **Definition:** Separate the construction of a complex object from its representation.
 - **Aspects that Vary:** How a composite object gets created.
