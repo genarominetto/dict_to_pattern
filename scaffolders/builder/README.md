@@ -27,7 +27,7 @@ project_structure = {
 
 ## Example Output:
 
-### Project Structure:
+### Generated Project Structure:
 
 ```
 .
@@ -51,7 +51,7 @@ project_structure = {
 └── pytest.ini
 ```
 
-### `main.py`:
+### Generated `main.py` file:
 
 ```python
 from airplane_builder.builders.commercial_jet_airplane_builder import CommercialJetAirplaneBuilder
