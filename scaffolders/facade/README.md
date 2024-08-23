@@ -7,10 +7,9 @@ The **Facade Scaffolder** constructs programs that align with the Facade design 
 
 ## How to Use
 
-1. **Set Up Project**:
-    - Define `project_name`, `project_structure`, and `root_module`.
-    - Customize `project_structure` to create the desired class hierarchy:
-        - Keys represent classes, allowing tree-like structures.
+- Define `project_name`, `project_structure`, and `root_module`.
+- Customize `project_structure` to create the desired class hierarchy:
+    - Keys represent classes, allowing tree-like structures.
 
 
 ## Example Input:
@@ -30,7 +29,7 @@ project_structure = {
 
 ## Example Output:
 
-### Project Structure:
+### Generated Project Structure:
 
 ```
 .
@@ -51,7 +50,7 @@ project_structure = {
 └── pytest.ini
 ```
 
-### `main.py`:
+### Generated `main.py` file:
 
 ```python
 from car.car import Car
