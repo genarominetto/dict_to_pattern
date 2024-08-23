@@ -15,18 +15,4 @@ This is a scaffolder (code project generator) solution to create complete python
 
 
 
-## Project Structure
-
-```
-.
-├── scaffolders
-│   ├── builder
-│   │   └── [Builder-specific modules and scripts]
-│   └── facade
-│       └── [Facade-specific modules and scripts]
-├── jupyter.py
-└── main.ipynb
-```
-
-
 
