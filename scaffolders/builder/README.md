@@ -13,17 +13,17 @@ The **Builder Scaffolder** constructs programs that align with the Builder desig
 
 ## Example Input:
 
-    ```python
-    project_name = "BuilderProject"
-    project_structure = {
-        "product": "Airplane",
-        "types": ["CommercialJet", "PrivateJet"],
-        "parts": ["Fuselage", "Wings", "Wheels"],
-        "parent_steps": ["build_fuselage", "attach_wings"],
-        "child_steps": ["install_interior", "test_flight"]
-    }
-    root_module = ""
-    ```
+```python
+project_name = "BuilderProject"
+project_structure = {
+    "product": "Airplane",
+    "types": ["CommercialJet", "PrivateJet"],
+    "parts": ["Fuselage", "Wings", "Wheels"],
+    "parent_steps": ["build_fuselage", "attach_wings"],
+    "child_steps": ["install_interior", "test_flight"]
+}
+root_module = ""
+```
 
 ## Example Output:
 
