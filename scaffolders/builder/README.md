@@ -14,7 +14,6 @@ The **Builder Scaffolder** constructs programs that align with the Builder desig
 ## Example Input:
 
 ```python
-project_name = "BuilderProject"
 project_structure = {
     "product": "Airplane",
     "types": ["CommercialJet", "PrivateJet"],
@@ -22,7 +21,6 @@ project_structure = {
     "parent_steps": ["build_fuselage", "attach_wings"],
     "child_steps": ["install_interior", "test_flight"]
 }
-root_module = ""
 ```
 
 ## Example Output:
