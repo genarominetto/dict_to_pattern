@@ -2,7 +2,7 @@
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/genarominetto/dict_to_pattern/blob/main/main.ipynb)
 
-### Facade
+### Facade Pattern
 
 - **Definition:** Provide a unified interface to a set of interfaces in a subsystem.
 - **Aspects that Vary:** Interface to a subsystem.
