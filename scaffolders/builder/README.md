@@ -7,11 +7,10 @@ The **Builder Scaffolder** constructs programs that align with the Builder desig
 
 ## How to Use
 
-- **Set Up Project**:
-    - Define `project_name`, `project_structure`, and `root_module`.
-    - Customize `project_structure` to set desired classes and methods:
-        - `product`, `types`, and `parts` represent Python classes.
-        - `parent_steps` and `child_steps` represent methods within builder classes.
+- Define `project_name`, `project_structure`, and `root_module`.
+- Customize `project_structure` to set desired classes and methods:
+    - `product`, `types`, and `parts` represent Python classes.
+    - `parent_steps` and `child_steps` represent methods within builder classes.
 
 ## Example Input:
 
