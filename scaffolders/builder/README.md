@@ -2,7 +2,15 @@
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/genarominetto/dict_to_pattern/blob/main/main.ipynb)
 
+
+### Builder
+
+- **Definition:** Separate the construction of a complex object from its representation.
+- **Aspects that Vary:** How a composite object gets created.
+- **Participants:** Builder, ConcreteBuilder, Director, Product.
+
 ## Overview
+
 The **Builder Scaffolder** constructs programs that align with the Builder design pattern. Define the project structure using the dict `project_structure` to create classes, methods, and tests. Modify the dict values to customize the program as needed.
 
 ## How to Use
