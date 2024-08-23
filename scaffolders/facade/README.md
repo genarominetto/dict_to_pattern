@@ -2,6 +2,12 @@
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/genarominetto/dict_to_pattern/blob/main/main.ipynb)
 
+### Facade
+
+- **Definition:** Provide a unified interface to a set of interfaces in a subsystem.
+- **Aspects that Vary:** Interface to a subsystem.
+- **Participants:** Facade, Subsystem classes.
+
 ## Overview
 The **Facade Scaffolder** constructs programs that align with the Facade design pattern. Define the project structure using a dictionary to create classes, modules, and tests. The keys in the dictionary represent classes, allowing you to create any tree-like structure.
 
