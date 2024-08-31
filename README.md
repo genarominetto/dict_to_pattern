@@ -4,8 +4,8 @@
 
 This is a scaffolder (code project generator) solution to create complete python template programs with tests from simple dictionaries. The idea is to create a scaffolder for each design pattern in the book **"[Design Patterns](https://en.wikipedia.org/wiki/Design_Patterns)"**. The project currently includes two scaffolders:
 
-1. [**Builder Scaffolder**](scaffolders/builder/): Constructs programs that align with the Builder design pattern. Separate the construction of a complex object from its representation.
-2. [**Facade Scaffolder**](scaffolders/facade/): Constructs programs that align with the Facade design pattern. Provide a unified interface to a set of interfaces in a subsystem.
+1. [**Builder Scaffolder**](scaffolders/builder/): Creates programs that align with the Builder design pattern. Use it to separate the construction of a complex object from its representation.
+2. [**Facade Scaffolder**](scaffolders/facade/): Creates programs that align with the Facade design pattern. Use it to provide a unified interface to a set of interfaces in a subsystem.
 
 ## TO GET STARTED, **PRESS** THE "OPEN IN COLAB" BUTTON AND **RUN** EVERY CELL.
 
