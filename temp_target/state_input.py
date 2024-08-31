@@ -1,6 +1,20 @@
 project_structure = {
-  # to do
+    "context": "LightSwitch",
+    "default_state": "Off",
+    "state_transitions": {
+        "On": [],
+        "Off": ["On"]
+    },
+    "properties": [
+        "energy_saving_mode",
+        "is_active"
+    ],
+    "methods": [
+        "additional_operation",
+        "another_additional_operation"
+    ]
 }
+
 
 
 
