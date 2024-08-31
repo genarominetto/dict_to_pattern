@@ -11,7 +11,7 @@ This is a scaffolder (code project generator) solution to create complete python
 
 - After the tests pass, the generated projects will automatically download to your PC.  
 - Once you are familiar with the notebook, edit the example `project_structure` dict and rerun the cell to generate your own program skeletons.  
-- If you want your new project to be a submodule of an existing project, update the `root_module` parameter (e.g., `root_module = "module.sub_module"`) to specify the desired module hierarchy.
+- If you want your new project to be a submodule of an existing project, update the `root_module` parameter (e.g., `root_module = "my_module.my_sub_module"`) to specify the desired module hierarchy.
 
 
 
