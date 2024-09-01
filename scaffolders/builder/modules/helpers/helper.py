@@ -21,6 +21,10 @@ class Helper:
 
     def write_empty_line(self):
         self.lines.append('\n')
+        
+    def convert_to_snake_case(self, name):
+        # Convert CamelCase to snake_case
+        return ''.join(['_' + c.lower() if c.isupper() else c for c in name]).lstrip('_')
 
     def save(self):
         with open(self.filepath, 'w') as file:

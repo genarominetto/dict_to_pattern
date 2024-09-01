@@ -93,24 +93,23 @@ class StateProjectCreator:
 
 if __name__ == "__main__":
     project_structure = {
-        "context": "TrafficLight",
-        "default_state": "Red",
+        "context": "Elevator",
+        "default_state": "Idle",
         "state_transitions": {
-            "Red": ["Green"],
-            "Green": ["Yellow"],
-            "Yellow": ["Green", "Red"]
+            "Idle": ["MovingUp", "MovingDown"],
+            "MovingUp": ["Idle", "MovingDown"],
+            "MovingDown": ["Idle", "MovingUp"]
         },
         "properties": [
-            "timer_duration",
-            "is_operational"
+            "current_floor",
+            "max_capacity"
         ],
         "methods": [
-            "change_light",
-            "emergency_blink"
+            "move_to_floor",
+            "emergency_stop"
         ]
     }
 
-
     root_module = ""  # Example root module
-    creator = StateProjectCreator("LightSwitchProject", project_structure, root_module)
+    creator = StateProjectCreator("ElevatorProject", project_structure, root_module)
     creator.create_project()
