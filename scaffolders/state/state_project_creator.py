@@ -91,25 +91,3 @@ class StateProjectCreator:
         main_creator = MainFileCreator(main_filename, self.root_module)
         main_creator.create_main_file(self.project_structure)
 
-if __name__ == "__main__":
-    project_structure = {
-        "context": "Elevator",
-        "default_state": "Idle",
-        "state_transitions": {
-            "Idle": ["MovingUp", "MovingDown"],
-            "MovingUp": ["Idle", "MovingDown"],
-            "MovingDown": ["Idle", "MovingUp"]
-        },
-        "properties": [
-            "current_floor",
-            "max_capacity"
-        ],
-        "methods": [
-            "move_to_floor",
-            "emergency_stop"
-        ]
-    }
-
-    root_module = ""  # Example root module
-    creator = StateProjectCreator("ElevatorProject", project_structure, root_module)
-    creator.create_project()
