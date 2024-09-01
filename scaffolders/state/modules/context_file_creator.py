@@ -28,7 +28,7 @@ class ContextFileCreator:
         for state_name in state_transitions.keys():
             transition_method = f'set_state_to_{self.helper.convert_to_snake_case(state_name)}'
             self.helper.write_code_line(1, f'def {transition_method}(self):')
-            self.helper.write_code_line(2, f'self._state.{transition_method}(self)')
+            self.helper.write_code_line(2, f'return self._state.{transition_method}(self)')
             self.helper.write_empty_line()
 
         # Implement additional methods

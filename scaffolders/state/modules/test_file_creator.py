@@ -18,7 +18,7 @@ class TestFileCreator:
         valid_transitions = state_transitions.get(state_name, [])
 
         # Write import statements for pytest, the context, and states
-        self.helper.write_import_line('pytest', '')
+        self.helper.write_code_line(0, 'import pytest')
         self.helper.write_import_line(f'{context_name_snake}.{context_name_snake}', context_name)
 
         for state in state_transitions.keys():
