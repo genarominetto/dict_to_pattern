@@ -18,16 +18,19 @@ class MainFileCreator:
         self.helper.write_code_line(1, f'{context_name_snake} = {context_name}()  # Initial state: {project_structure["default_state"].lower()}')
 
         # Write state transition methods
+        self.helper.write_empty_line()
         for state in project_structure["state_transitions"]:
             for transition in project_structure["state_transitions"][state]:
                 transition_method = f'set_state_to_{self.helper.convert_to_snake_case(transition)}'
                 self.helper.write_code_line(1, f'{context_name_snake}.{transition_method}()')
 
         # Write additional methods
+        self.helper.write_empty_line()
         for method in project_structure["methods"]:
             self.helper.write_code_line(1, f'{context_name_snake}.{method}()')
 
         # Write a generic report_status method (assuming this will be implemented)
+        self.helper.write_empty_line()
         self.helper.write_code_line(1, f'{context_name_snake}.report_status()')
 
         # Save the file
