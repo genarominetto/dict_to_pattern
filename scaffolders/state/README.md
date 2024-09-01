@@ -69,12 +69,15 @@ from traffic_light.traffic_light import TrafficLight
 
 if __name__ == "__main__":
     traffic_light = TrafficLight()  # Initial state: red
+
     traffic_light.set_state_to_yellow()
     traffic_light.set_state_to_yellow()
     traffic_light.set_state_to_red()
     traffic_light.set_state_to_green()
+
     traffic_light.adjust_brightness()
     traffic_light.switch_to_backup_power()
+
     traffic_light.report_status()
 ```
 
