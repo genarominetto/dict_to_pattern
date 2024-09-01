@@ -146,21 +146,4 @@ class FacadeProjectCreator:
             test_creator = TestFileCreator(f"{root_path}/{info['file_path']}", self.root_module)
             test_creator.create_test_file(info['root_class'], info['leaf_ladders'])
 
-if __name__ == "__main__":
-    project_structure = {
-        "Menu": {
-            "Food": {
-                "Appetizers": {},
-                "MainCourse": {}
-            },
-            "Drinks": {
-                "Alcoholic": {},
-                "NonAlcoholic": {}
-            }
-        },
-        "Staff": {}
-    }
 
-    root_module = "folder_a.folder_b"  # Define the root module
-    creator = FacadeProjectCreator("FacadeProject", project_structure, root_module)
-    creator.create_project()
