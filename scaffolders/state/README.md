@@ -1,34 +1,42 @@
-# Builder Scaffolder
+# State Scaffolder
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/genarominetto/dict_to_pattern/blob/main/main.ipynb)
 
 
-### Builder Pattern
+### State Pattern
 
-- **Definition:** Separate the construction of a complex object from its representation.
-- **Aspects that Vary:** How a composite object gets created.
-- **Participants:** Builder, ConcreteBuilder, Director, Product.
+- **Definition:** Allows an object to alter its behavior when its internal state changes.
+- **Aspects that Vary:** States of an object.
+- **Participants:** Context, State, ConcreteState.
 
 ## Overview
 
-The **Builder Scaffolder** constructs programs that align with the Builder design pattern. Define the project structure using the dict `project_structure` to create classes, methods, and tests. Modify the dict values to customize the program as needed.
+The **State Scaffolder** creates programs that align with the State design pattern. Define the project structure using the dict `project_structure` to create classes, methods, and tests. Modify the dict values to customize the program as needed.
 
 ## How to Use
 
 - Define `project_name`, `project_structure`, and `root_module`.
-- Customize `project_structure` to set desired classes and methods:
-    - `product`, `types`, and `parts` represent Python classes.
-    - `parent_steps` and `child_steps` represent methods within builder classes.
+- Customize `project_structure` to set desired classes and methods.
 
 ## Example Input:
 
 ```python
 project_structure = {
-    "product": "Airplane",
-    "types": ["CommercialJet", "PrivateJet"],
-    "parts": ["Fuselage", "Wings", "Wheels"],
-    "parent_steps": ["build_fuselage", "attach_wings"],
-    "child_steps": ["install_interior", "test_flight"]
+    "context": "TrafficLight",
+    "default_state": "Red",
+    "state_transitions": {
+        "Red": ["Yellow"],
+        "Green": ["Yellow"],
+        "Yellow": ["Red", "Green"]
+    },
+    "properties": [
+        "timer_duration",
+        "is_operational"
+    ],
+    "methods": [
+        "adjust_brightness",
+        "switch_to_backup_power"
+    ]
 }
 ```
 
@@ -38,22 +46,18 @@ project_structure = {
 
 ```
 .
-├── airplane_builder
-│   ├── builders
+├── traffic_light
+│   ├── states
 │   │   ├── abstract
-│   │   │   └── airplane_builder.py
-│   │   ├── commercial_jet_airplane_builder.py
-│   │   └── private_jet_airplane_builder.py
-│   ├── product
-│   │   ├── airplane_parts
-│   │   │   ├── fuselage.py
-│   │   │   ├── wheels.py
-│   │   │   └── wings.py
-│   │   └── airplane.py
-│   └── director.py
-├── tests
-│   ├── test_commercial_jet_airplane.py
-│   └── test_private_jet_airplane.py
+│   │   │   └── state.py
+│   │   ├── green_state.py
+│   │   ├── red_state.py
+│   │   └── yellow_state.py
+│   ├── tests
+│   │   ├── test_green_state.py
+│   │   ├── test_red_state.py
+│   │   └── test_yellow_state.py
+│   └── traffic_light.py
 ├── main.py
 └── pytest.ini
 ```
@@ -61,36 +65,27 @@ project_structure = {
 ### Generated `main.py` file:
 
 ```python
-from airplane_builder.builders.commercial_jet_airplane_builder import CommercialJetAirplaneBuilder
-from airplane_builder.builders.private_jet_airplane_builder import PrivateJetAirplaneBuilder
-from airplane_builder.director import Director
-
-def main():
-    commercial_jet_builder = CommercialJetAirplaneBuilder()
-    director = Director(commercial_jet_builder)
-    commercial_jet_airplane = director.construct_airplane()
-    print(commercial_jet_airplane)
-
-    private_jet_builder = PrivateJetAirplaneBuilder()
-    director = Director(private_jet_builder)
-    private_jet_airplane = director.construct_airplane()
-    print(private_jet_airplane)
+from traffic_light.traffic_light import TrafficLight
 
 if __name__ == "__main__":
-    main()
+    traffic_light = TrafficLight()  # Initial state: red
+    traffic_light.set_state_to_yellow()
+    traffic_light.set_state_to_yellow()
+    traffic_light.set_state_to_red()
+    traffic_light.set_state_to_green()
+    traffic_light.adjust_brightness()
+    traffic_light.switch_to_backup_power()
+    traffic_light.report_status()
 ```
 
 ### `main.py` execution output:
 
 ```
-Doing build_fuselage
-Doing attach_wings
-Doing install_interior for CommercialJet
-Doing test_flight for CommercialJet
-Airplane of type CommercialJet with fuselage Fuselage, wings Wings, wheels Wheels.
-Doing build_fuselage
-Doing attach_wings
-Doing install_interior for PrivateJet
-Doing test_flight for PrivateJet
-Airplane of type PrivateJet with fuselage Fuselage, wings Wings, wheels Wheels.
+Switching from Red State to Yellow state.
+Already in Yellow State.
+Switching from Yellow State to Red state.
+Transition from Red State to Green state is not allowed.
+State: Red State
+- Timer duration: None
+- Is operational: None
 ```
