@@ -3,9 +3,9 @@ import shutil
 from modules.abstract_state_file_creator import AbstractStateFileCreator
 from modules.concrete_state_file_creator import ConcreteStateFileCreator
 from modules.context_file_creator import ContextFileCreator
-from modules.main_file_creator import MainFileCreator
+from modules.main_file_creator_stt import MainFileCreator
 from modules.simple_file_creator import SimpleFileCreator
-from modules.test_file_creator import TestFileCreator
+from modules.test_file_creator_stt import TestFileCreator
 from modules.helpers.helper import Helper
 
 class StructureHelper:
