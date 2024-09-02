@@ -29,8 +29,7 @@ if __name__ == "__main__":
     print(f"Total size in group2: {group2.calculate_total_size()}")
 
     # Calculate average size
-    total_size, leaf_count = group2.calculate_average_size()
-    average_size = total_size / leaf_count if leaf_count != 0 else 0
+    average_size = group2.calculate_average_size()
     print(f"Average size in group2: {average_size:.2f}")
 
     # Check active status
