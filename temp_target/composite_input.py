@@ -3,8 +3,8 @@ project_structure = {
     "composite" : "group",
     "leaves" : ["circle", "square"],
     "leaf_properties" : {
-        "str" : ["name"],
-        "int" : ["x", "y"],
+        "str" : [],
+        "int" : [],
         "float" : ["size"],
         "bool" : ["active"]
     }
