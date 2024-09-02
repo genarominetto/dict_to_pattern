@@ -15,9 +15,9 @@ class Leaf(Graphic):
 
     def calculate_total_size(self) -> float:
         return self.size
-
-    def calculate_average_size(self) -> tuple[float, int]:
-        return self.size, 1
+    
+    def calculate_average_size(self) -> float:
+        return self.size
 
     def is_active(self) -> bool:
         return self.is_active
