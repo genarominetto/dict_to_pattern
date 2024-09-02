@@ -15,7 +15,7 @@ class Graphic(ABC):
         pass
 
     @abstractmethod
-    def calculate_average_size(self) -> tuple[float, int]:
+    def calculate_average_size(self) -> float:
         pass
 
     @abstractmethod
