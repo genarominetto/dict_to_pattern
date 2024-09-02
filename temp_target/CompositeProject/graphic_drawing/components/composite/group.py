@@ -31,14 +31,14 @@ class Group(Graphic):
             total_size += graphic.calculate_total_size()
         return total_size
 
-    def calculate_average_size(self) -> tuple[float, int]:
+    def calculate_average_size(self) -> float:
         total_size = 0
         leaf_count = 0
         for graphic in self.graphics:
-            size, count = graphic.calculate_average_size()
+            size, count = graphic.calculate_average_size(), 1 if isinstance(graphic, Leaf) else graphic.calculate_average_size()
             total_size += size
             leaf_count += count
-        return total_size, leaf_count
+        return total_size / leaf_count if leaf_count != 0 else 0
 
     def is_active(self) -> bool:
         for graphic in self.graphics:
