@@ -20,9 +20,9 @@ class Group(Graphic):
         return leaves
 
     def get_structure_as_dict(self) -> dict:
-        structure = {self.name: []}
+        structure = {self.name: {}}
         for graphic in self.graphics:
-            structure[self.name].append(graphic.get_structure_as_dict())
+            structure[self.name].update(graphic.get_structure_as_dict())
         return structure
 
     def calculate_total_size(self) -> float:
