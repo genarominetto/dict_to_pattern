@@ -11,7 +11,7 @@ class Leaf(Graphic):
         return [self]
 
     def get_structure_as_dict(self) -> dict:
-        return {self.__class__.__name__: self.name}
+        return {self.name: {}}
 
     def calculate_total_size(self) -> float:
         return self.size
