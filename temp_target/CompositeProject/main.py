@@ -1,39 +1,40 @@
-from graphic_drawing.components.leafs.circle import Circle
-from graphic_drawing.components.leafs.square import Square
-from graphic_drawing.components.composite.group import Group
+from component.components.composite.group import Group
+from component.components.leafs.circle import Circle
+from component.components.leafs.square import Square
 
 if __name__ == "__main__":
-    # Create individual graphics with name, size, and active status
-    circle1 = Circle("Circle1", 5, True)
-    square1 = Square("Square1", 4, False)
-    circle2 = Circle("Circle2", 7, False)
+    circle1 = Circle(name="Circle1", size=3, is_active=True)
+    circle2 = Circle(name="Circle2", size=3, is_active=True)
+    square1 = Square(name="Square1", size=3, is_active=True)
+    square2 = Square(name="Square2", size=3, is_active=True)
+    
+    group1 = Group(name="Group1")
+    group2 = Group(name="Group2")
 
-    # Create groups
-    group1 = Group("Group1")
-    group2 = Group("Group2")
-
-    # Add graphics to groups
     group1.add(circle1)
     group1.add(square1)
-
     group2.add(circle2)
-    group2.add(group1)
+    group2.add(square2)
 
-    # Get all nested leaves
-    print(f"All nested leaves in group2: {[leaf.name for leaf in group2.get_all_nested_leaves()]}")
+    group1.remove(square1)
 
-    # Get complete structure
-    print(f"Structure of group2: {group2.get_structure_as_dict()}")
+    group1.add(group2)
+    
+    def get_graphic_name(graphic):
+        return graphic.name
+    
+    circle_names = group1.execute_operation_recursively(
+        operation_func=get_graphic_name,
+        condition_func=isinstance,
+        condition_args=(Circle,)
+    )
+    depth = group1.calculate_depth()
+    
+    print(group1)
+    print(group1.is_composite())
+    print(group1.any_active())
+    print(group1.id)
+    print(len(group1.get_children()))
+    print(circle_names)
+    print(depth)
 
-    # Calculate total size
-    print(f"Total size in group2: {group2.calculate_total_size()}")
-
-    # Calculate average size
-    average_size = group2.calculate_average_size()
-    print(f"Average size in group2: {average_size:.2f}")
-
-    # Check active status
-    print(f"Is any graphic in group2 active? {'Yes' if group2.is_active() else 'No'}")
-
-    # Print tree-like structure
-    print(f"Tree structure of group2:\n{group2}")
