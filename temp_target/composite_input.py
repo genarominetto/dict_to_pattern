@@ -1,12 +1,10 @@
 project_structure = {
-    "component" : "graphic",
-    "composite" : "group",
-    "leaves" : ["circle", "square"],
+    "component" : "Graphic",
+    "composite" : "Group",
+    "leaves" : ["Circle", "Square"],
     "leaf_properties" : {
-        "str" : [],
-        "int" : [],
-        "float" : ["size"],
-        "bool" : ["active"]
+        "size" : 3,
+        "is_active" : True
     }
 }
 
@@ -15,8 +13,11 @@ project_structure = {
 
 
 .
-├── graphic_drawing
-│   ├── base
+├── component
+│   ├── abstract
+│   │   ├── graphic_modules
+│   │   │   ├── data_loader.py
+│   │   │   └── graphic_validator.py
 │   │   └── graphic.py
 │   ├── components
 │   │   ├── composite
@@ -30,6 +31,10 @@ project_structure = {
 │       ├── test_circle.py
 │       └── test_square.py
 ├── main.py
+└── pytest.ini
+
+8 directories, 11 files
+
 
 
 
