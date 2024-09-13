@@ -6,34 +6,27 @@ from modules.helpers.component_file_builder.builders.composite_component_file_bu
 from modules.helpers.component_file_builder.builders.abstract_leaf_component_file_builder import AbstractLeafComponentFileBuilder
 from modules.helpers.component_file_builder.director import Director
 from modules.concrete_leaf_file_creator import ConcreteLeafFileCreator
+from modules.data_loader_file_creator import DataLoaderFileCreator
+from modules.validator_file_creator import ValidatorFileCreator
 from modules.main_file_creator import MainFileCreator
 from modules.simple_file_creator import SimpleFileCreator
 from modules.test_file_creator import TestFileCreator
 
 class StructureHelper:
-    def __init__(self, project_structure, root_module):
+    def __init__(self, project_structure):
         self.project_structure = project_structure
-        self.root_module = root_module
-        # No need to instantiate Helper here since we're using static methods
 
     def create_directory_structure(self, root_path):
         # Extract names from project_structure
         component_name = self.project_structure["component"]
         composite_name = self.project_structure["composite"]
-        leaves = self.project_structure["leaves"]
 
         # Convert names to snake_case
         component_name_snake = Helper.convert_to_snake_case(component_name)
         composite_name_snake = Helper.convert_to_snake_case(composite_name)
 
-        # Define the root directory for the module
-        if self.root_module:
-            root_module_path = os.path.join(root_path, *self.root_module.split('.'))
-        else:
-            root_module_path = root_path
-
         # Define directories based on the component name
-        component_root_dir = os.path.join(root_module_path, component_name_snake)
+        component_root_dir = os.path.join(root_path, component_name_snake)
         abstract_dir = os.path.join(component_root_dir, 'abstract')
         abstract_modules_dir = os.path.join(abstract_dir, f'{component_name_snake}_modules')
         components_dir = os.path.join(component_root_dir, 'components')
@@ -57,16 +50,14 @@ class StructureHelper:
             'composite_dir': composite_dir,
             'leaves_dir': leaves_dir,
             'abstract_leaf_dir': abstract_leaf_dir,
-            'tests_dir': tests_dir,
-            'root_module_path': root_module_path
+            'tests_dir': tests_dir
         }
 
 class CompositeProjectCreator:
-    def __init__(self, project_name, project_structure, root_module):
+    def __init__(self, project_name, project_structure):
         self.project_name = project_name
         self.project_structure = project_structure
-        self.root_module = root_module
-        self.structure_helper = StructureHelper(project_structure, root_module)
+        self.structure_helper = StructureHelper(project_structure)
 
     def create_project(self):
         # Delete the project directory if it exists
@@ -81,14 +72,15 @@ class CompositeProjectCreator:
 
         # Create __init__.py files in necessary directories
         for dir_path in dirs.values():
-            if dir_path != dirs['root_module_path']:
-                init_file = os.path.join(dir_path, '__init__.py')
-                os.makedirs(dir_path, exist_ok=True)
-                SimpleFileCreator(init_file).create_simple_file("")
+            init_file = os.path.join(dir_path, '__init__.py')
+            os.makedirs(dir_path, exist_ok=True)
+            simple_creator = SimpleFileCreator(init_file)
+            simple_creator.create_simple_file("")
 
         # Create the pytest.ini file
         pytest_ini_path = os.path.join(self.project_name, 'pytest.ini')
-        SimpleFileCreator(pytest_ini_path).create_simple_file("[pytest]\npythonpath = .\n")
+        simple_creator = SimpleFileCreator(pytest_ini_path)
+        simple_creator.create_simple_file("[pytest]\npythonpath = .\n")
 
         # Use the builder pattern to create component files
         # Create the abstract component file
@@ -97,7 +89,7 @@ class CompositeProjectCreator:
             f"{Helper.convert_to_snake_case(self.project_structure['component'])}.py"
         )
         abstract_builder = AbstractComponentFileBuilder(
-            abstract_component_filename, self.project_structure, self.root_module
+            abstract_component_filename, self.project_structure
         )
         director = Director(abstract_builder)
         director.construct_component_file()
@@ -108,7 +100,7 @@ class CompositeProjectCreator:
             f"{Helper.convert_to_snake_case(self.project_structure['composite'])}.py"
         )
         composite_builder = CompositeComponentFileBuilder(
-            composite_component_filename, self.project_structure, self.root_module
+            composite_component_filename, self.project_structure
         )
         director = Director(composite_builder)
         director.construct_component_file()
@@ -116,10 +108,26 @@ class CompositeProjectCreator:
         # Create the abstract leaf component file
         abstract_leaf_filename = os.path.join(dirs['abstract_leaf_dir'], 'leaf.py')
         abstract_leaf_builder = AbstractLeafComponentFileBuilder(
-            abstract_leaf_filename, self.project_structure, self.root_module
+            abstract_leaf_filename, self.project_structure
         )
         director = Director(abstract_leaf_builder)
         director.construct_component_file()
+
+        # Create the data loader file
+        data_loader_filename = os.path.join(
+            dirs['abstract_modules_dir'],
+            'data_loader.py'
+        )
+        data_loader_creator = DataLoaderFileCreator(data_loader_filename)
+        data_loader_creator.create_data_loader_file(self.project_structure)
+
+        # Create the validator file
+        validator_filename = os.path.join(
+            dirs['abstract_modules_dir'],
+            f"{Helper.convert_to_snake_case(self.project_structure['component'])}_validator.py"
+        )
+        validator_creator = ValidatorFileCreator(validator_filename)
+        validator_creator.create_validator_file(self.project_structure)
 
         # Create concrete leaf files using ConcreteLeafFileCreator
         for leaf in self.project_structure['leaves']:
@@ -128,9 +136,9 @@ class CompositeProjectCreator:
                 f"{Helper.convert_to_snake_case(leaf)}.py"
             )
             leaf_creator = ConcreteLeafFileCreator(
-                leaf_filename, self.project_structure, self.root_module
+                leaf_filename
             )
-            leaf_creator.create_concrete_leaf_file(leaf)
+            leaf_creator.create_concrete_leaf_file(self.project_structure)
 
         # Create test files for leaves
         for leaf in self.project_structure['leaves']:
@@ -138,12 +146,12 @@ class CompositeProjectCreator:
                 dirs['tests_dir'],
                 f"test_{Helper.convert_to_snake_case(leaf)}.py"
             )
-            test_creator = TestFileCreator(test_filename, self.root_module)
-            test_creator.create_test_file(leaf, self.project_structure)
+            test_creator = TestFileCreator(test_filename)
+            test_creator.create_test_file(self.project_structure)
 
         # Create main.py file
         main_filename = os.path.join(self.project_name, 'main.py')
-        main_creator = MainFileCreator(main_filename, self.root_module)
+        main_creator = MainFileCreator(main_filename)
         main_creator.create_main_file(self.project_structure)
 
 if __name__ == "__main__":
@@ -157,6 +165,5 @@ if __name__ == "__main__":
         }
     }
 
-    root_module = ""  # Define root module if needed
-    creator = CompositeProjectCreator("CompositeProject", project_structure, root_module)
+    creator = CompositeProjectCreator("CompositeProject", project_structure)
     creator.create_project()

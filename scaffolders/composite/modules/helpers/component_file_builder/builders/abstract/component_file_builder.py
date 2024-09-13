@@ -1,10 +1,12 @@
-from abc import ABC
-from abc import abstractmethod
-from modules.helpers.component_file_builder.product.component_file import ComponentFile
+from abc import ABC, abstractmethod
+from modules.helpers.helper import Helper
 
 class ComponentFileBuilder(ABC):
-    def __init__(self, component_file_type):
-        self.component_file = ComponentFile(component_file_type)
+    def __init__(self, filename, project_structure, root_module=None):
+        self.filename = filename
+        self.project_structure = project_structure
+        self.root_module = root_module
+        self.helper = Helper(filename, root_module)
 
     @abstractmethod
     def write___init___method(self):
@@ -111,4 +113,4 @@ class ComponentFileBuilder(ABC):
         pass
 
     def get_component_file(self):
-        return self.component_file
+        return self.helper.save()

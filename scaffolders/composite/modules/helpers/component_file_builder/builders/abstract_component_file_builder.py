@@ -1,10 +1,8 @@
 from modules.helpers.component_file_builder.builders.abstract.component_file_builder import ComponentFileBuilder
-from modules.helpers.component_file_builder.product.component_file import ComponentFile
 
 class AbstractComponentFileBuilder(ComponentFileBuilder):
-    def __init__(self):
-        super().__init__("Abstract")
-        self.component_file = ComponentFile("Abstract")
+    def __init__(self, filename, project_structure, root_module=None):
+        super().__init__(filename, project_structure, root_module)
 
     def write___init___method(self):
         print("Doing write___init___method for Abstract")
