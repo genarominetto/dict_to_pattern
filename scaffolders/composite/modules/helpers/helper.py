@@ -10,19 +10,15 @@ class Helper:
         self.lines.append(' ' * (indentation_level * 4) + code_line + '\n')
 
     def write_import_line(self, module, class_name):
-        """
-        Add an import line in the format 'from module import class_name' to the file.
-        This method does not support 'import module' format.
-        Use the write_code_line method for other types of import statements.
-        """
         if self.root_module:
             module = f"{self.root_module}.{module}"
         self.lines.append(f'from {module} import {class_name}\n')
 
     def write_empty_line(self):
         self.lines.append('\n')
-        
-    def convert_to_snake_case(self, name):
+
+    @staticmethod
+    def convert_to_snake_case(name):
         # Convert CamelCase to snake_case
         return ''.join(['_' + c.lower() if c.isupper() else c for c in name]).lstrip('_')
 
