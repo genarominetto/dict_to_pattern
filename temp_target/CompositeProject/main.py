@@ -31,10 +31,9 @@ if __name__ == "__main__":
     depth = group1.calculate_depth()
     
     print(group1)
-    print(group1.is_composite())
-    print(group1.any_active())
-    print(group1.id)
-    print(len(group1.get_children()))
-    print(circle_names)
-    print(depth)
-
+    print(f"Is group1 composite? {group1.is_composite()}")
+    print(f"Does group1 have any active elements? {group1.any_active()}")
+    print(f"Group1 ID: {group1.id}")
+    print(f"Number of children in group1: {len(group1.get_children())}")
+    print(f"Circle names in group1: {circle_names}")
+    print(f"Depth of group1 hierarchy: {depth}")

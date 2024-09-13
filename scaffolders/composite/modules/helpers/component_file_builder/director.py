@@ -11,7 +11,7 @@ class Director:
         self.builder.write__ensure_tuple_method()
         self.builder.write__generate_id_method()
         self.builder.write_any_bool_methods()
-        self.builder.write__validate_group_logic_method()
+        self.builder.write__validate_composite_logic_method()
         self.builder.write__validate_remove_logic_method()
         self.builder.write_validate_structure_method()
         self.builder.write_add_method()

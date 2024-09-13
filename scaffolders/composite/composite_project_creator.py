@@ -136,7 +136,7 @@ class CompositeProjectCreator:
                 f"{Helper.convert_to_snake_case(leaf)}.py"
             )
             leaf_creator = ConcreteLeafFileCreator(
-                leaf_filename
+                leaf_filename, leaf_name=leaf  # Pass the leaf name here
             )
             leaf_creator.create_concrete_leaf_file(self.project_structure)
 
@@ -153,6 +153,7 @@ class CompositeProjectCreator:
         main_filename = os.path.join(self.project_name, 'main.py')
         main_creator = MainFileCreator(main_filename)
         main_creator.create_main_file(self.project_structure)
+
 
 if __name__ == "__main__":
     project_structure = {
