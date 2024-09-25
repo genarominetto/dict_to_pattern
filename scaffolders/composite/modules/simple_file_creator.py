@@ -1,12 +1,13 @@
-# modules/simple_file_creator.py
-
 from modules.helpers.helper import Helper
+from jinja2 import Environment, FileSystemLoader
 
 class SimpleFileCreator:
-    def __init__(self, filename):
+    def __init__(self, filename, root_module=None):
         self.filename = filename
-        self.helper = Helper(filename)
+        self.helper = Helper(filename, root_module)
+        self.env = Environment(loader=FileSystemLoader('modules/templates'))
 
-    def create_simple_file(self, content):
-        self.helper.write_code_line(0, content)
-        self.helper.save()
+    def create_simple_file(self, project_structure):
+        template = self.env.get_template('simple.py.jinja2')
+        # Add logic here to render the template and create the file
+        pass
