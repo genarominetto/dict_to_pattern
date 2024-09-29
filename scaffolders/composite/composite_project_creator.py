@@ -53,10 +53,11 @@ class StructureHelper:
         }
 
 class CompositeProjectCreator:
-    def __init__(self, project_name, project_structure):
+    def __init__(self, project_name, project_structure, root_module):
         self.project_name = project_name
         self.project_structure = project_structure
         self.structure_helper = StructureHelper(project_structure)
+        self.root_module = root_module  # Add root_module attribute
 
     def create_project(self):
         # Delete the project directory if it exists
@@ -86,7 +87,7 @@ class CompositeProjectCreator:
             dirs['abstract_dir'],
             f"{Helper.convert_to_snake_case(self.project_structure['component'])}.py"
         )
-        abstract_creator = AbstractComponentFileCreator(abstract_component_filename)
+        abstract_creator = AbstractComponentFileCreator(abstract_component_filename, self.root_module)
         abstract_creator.create_abstract_component_file(self.project_structure)
 
         # Create the composite component file using CompositeFileCreator
@@ -94,12 +95,12 @@ class CompositeProjectCreator:
             dirs['composite_dir'],
             f"{Helper.convert_to_snake_case(self.project_structure['composite'])}.py"
         )
-        composite_creator = CompositeFileCreator(composite_component_filename)
+        composite_creator = CompositeFileCreator(composite_component_filename, self.root_module)
         composite_creator.create_composite_file(self.project_structure)
 
         # Create the abstract leaf component file using AbstractLeafFileCreator
         abstract_leaf_filename = os.path.join(dirs['abstract_leaf_dir'], 'leaf.py')
-        abstract_leaf_creator = AbstractLeafFileCreator(abstract_leaf_filename)
+        abstract_leaf_creator = AbstractLeafFileCreator(abstract_leaf_filename, self.root_module)
         abstract_leaf_creator.create_abstract_leaf_file(self.project_structure)
 
         # Create the data loader file using DataLoaderFileCreator
@@ -107,7 +108,7 @@ class CompositeProjectCreator:
             dirs['abstract_modules_dir'],
             'data_loader.py'
         )
-        data_loader_creator = DataLoaderFileCreator(data_loader_filename)
+        data_loader_creator = DataLoaderFileCreator(data_loader_filename, self.root_module)
         data_loader_creator.create_data_loader_file(self.project_structure)
 
         # Create the validator file using ValidatorFileCreator
@@ -115,7 +116,7 @@ class CompositeProjectCreator:
             dirs['abstract_modules_dir'],
             f"{Helper.convert_to_snake_case(self.project_structure['component'])}_validator.py"
         )
-        validator_creator = ValidatorFileCreator(validator_filename)
+        validator_creator = ValidatorFileCreator(validator_filename, self.root_module)
         validator_creator.create_validator_file(self.project_structure)
 
         # Create concrete leaf files using ConcreteLeafFileCreator
@@ -124,7 +125,7 @@ class CompositeProjectCreator:
                 dirs['leaves_dir'],
                 f"{Helper.convert_to_snake_case(leaf)}.py"
             )
-            leaf_creator = ConcreteLeafFileCreator(leaf_filename)
+            leaf_creator = ConcreteLeafFileCreator(leaf_filename, self.root_module)
             leaf_creator.create_concrete_leaf_file(self.project_structure)
 
         # Create test files for leaves using TestFileCreator
@@ -133,12 +134,12 @@ class CompositeProjectCreator:
                 dirs['tests_dir'],
                 f"test_{Helper.convert_to_snake_case(leaf)}.py"
             )
-            test_creator = TestFileCreator(test_filename)
+            test_creator = TestFileCreator(test_filename, self.root_module)
             test_creator.create_test_file(self.project_structure)
 
         # Create main.py file using MainFileCreator
         main_filename = os.path.join(self.project_name, 'main.py')
-        main_creator = MainFileCreator(main_filename)
+        main_creator = MainFileCreator(main_filename, self.root_module)
         main_creator.create_main_file(self.project_structure)
 
 if __name__ == "__main__":
@@ -152,5 +153,6 @@ if __name__ == "__main__":
         }
     }
 
-    creator = CompositeProjectCreator("CompositeProject", project_structure)
+    # Pass "dir.sub_dir" as the root module as specified
+    creator = CompositeProjectCreator("CompositeProject", project_structure, "dir.sub_dir")
     creator.create_project()
