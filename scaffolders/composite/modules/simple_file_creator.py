@@ -8,5 +8,4 @@ class SimpleFileCreator:
         self.helper = Helper(filename)
 
     def create_simple_file(self, content):
-        self.helper.write_code_line(0, content)
         self.helper.save()

@@ -7,26 +7,6 @@ class Helper:
         self.root_module = root_module
         self.lines = []
 
-    def write_code_line(self, indentation_level, code_line, newline=True):
-        line = ' ' * (indentation_level * 4) + code_line
-        if newline:
-            line += '\n'
-        self.lines.append(line)
-
-    def write_import_line(self, module, class_name, indent_level=0):
-        if self.root_module:
-            module = f"{self.root_module}.{module}"
-        indent = ' ' * (indent_level * 4)
-        self.lines.append(f'{indent}from {module} import {class_name}\n')
-
-    def write_empty_line(self):
-        self.lines.append('\n')
-
-    @staticmethod
-    def convert_to_snake_case(name):
-        # Convert CamelCase to snake_case
-        return ''.join(['_' + c.lower() if c.isupper() else c for c in name]).lstrip('_')
-
     def save(self):
         with open(self.filepath, 'w') as file:
             file.writelines(self.lines)
@@ -47,6 +27,11 @@ class Helper:
             return 'Dict[str, Any]'
         else:
             return 'Any'
+        
+    @staticmethod
+    def convert_to_snake_case(name):
+        # Convert CamelCase to snake_case
+        return ''.join(['_' + c.lower() if c.isupper() else c for c in name]).lstrip('_')
 
 
 

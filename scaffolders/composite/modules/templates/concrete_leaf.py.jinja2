@@ -1,0 +1,5 @@
+from {{ root_module }}.{{ component_name_snake }}.components.leaves.abstract.leaf import Leaf
+
+class {{ leaf_class_name }}(Leaf):
+    def __init__(self, *, name: str{% for prop in properties %}, {{ prop.name }}: {{ prop.type }}{% endfor %}):
+        super().__init__(name=name{% for prop in properties %}, {{ prop.name }}={{ prop.name }}{% endfor %})

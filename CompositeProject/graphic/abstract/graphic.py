@@ -1,9 +1,9 @@
 from abc import ABC, abstractmethod
 from typing import Callable, List, Optional, Any, Dict, Union, Set
-from {{ root_module }}.{{ component_name_snake }}.abstract.{{ component_name_snake }}_modules.data_loader import DataLoader
-from {{ root_module }}.{{ component_name_snake }}.abstract.{{ component_name_snake }}_modules.{{ component_name_snake }}_validator import {{ component_name }}Validator
+from dir.sub_dir.graphic.abstract.graphic_modules.data_loader import DataLoader
+from dir.sub_dir.graphic.abstract.graphic_modules.graphic_validator import GraphicValidator
 
-class {{ component_name }}(ABC):
+class Graphic(ABC):
     """
     Abstract base class for all components (both composite and leaf).
     """
@@ -12,11 +12,11 @@ class {{ component_name }}(ABC):
     _loader = DataLoader()
 
     def __init__(self, name: str):
-        self._parents: List['{{ component_name }}'] = []  # Allowing multiple parents
-        self._id = {{ component_name }}._generate_id()  # Assign a unique id to each instance
-        self._children: List['{{ component_name }}'] = []  # Private children property
+        self._parents: List['Graphic'] = []  # Allowing multiple parents
+        self._id = Graphic._generate_id()  # Assign a unique id to each instance
+        self._children: List['Graphic'] = []  # Private children property
         self.name = name
-        self._validator = {{ component_name }}Validator(self)  # Initialize the validator
+        self._validator = GraphicValidator(self)  # Initialize the validator
 
     @abstractmethod
     def get_structure_as_dict(self) -> Dict:
@@ -43,25 +43,25 @@ class {{ component_name }}(ABC):
         """Returns True if this component is a leaf node."""
         return not self.get_children()
 
-    def get_children(self) -> List['{{ component_name }}']:
+    def get_children(self) -> List['Graphic']:
         """Get the list of children for this component."""
         return self._children
 
-    def get_parents(self) -> List['{{ component_name }}']:
+    def get_parents(self) -> List['Graphic']:
         """Get the list of parents for this component."""
         return self._parents
 
-{% for method_name, method_value in bool_methods.items() %}
-    def {{ method_name }}(self) -> bool:
-        """Returns the default value for {{ method_name }}."""
-        return {{ method_value }}
-{% endfor %}
+
+    def any_active(self) -> bool:
+        """Returns the default value for any_active."""
+        return True
+
 
     @property
     def id(self) -> int:
         return self._id
 
-    def get_components_recursively(self) -> List['{{ component_name }}']:
+    def get_components_recursively(self) -> List['Graphic']:
         """Recursively gather all components."""
         components = [self]
         for child in self.get_children():
@@ -74,7 +74,7 @@ class {{ component_name }}(ABC):
             child.remove_components_recursively()
         self._children.clear()
 
-    def execute_operation_recursively(self, operation: Callable[['{{ component_name }}'], None]) -> None:
+    def execute_operation_recursively(self, operation: Callable[['Graphic'], None]) -> None:
         """Recursively execute an operation on this component and all its children."""
         operation(self)
         for child in self.get_children():
@@ -87,12 +87,12 @@ class {{ component_name }}(ABC):
         return 1 + max(child.calculate_depth() for child in self.get_children())
 
     @abstractmethod
-    def add(self, component: '{{ component_name }}') -> None:
+    def add(self, component: 'Graphic') -> None:
         """Adds a child component."""
         pass
 
     @abstractmethod
-    def remove(self, component: '{{ component_name }}') -> None:
+    def remove(self, component: 'Graphic') -> None:
         """Removes a child component."""
         pass
 
@@ -100,15 +100,15 @@ class {{ component_name }}(ABC):
         no_circular_references: bool = True,
         no_parent_duplication_conflict: bool = True,
         parent_child_relationships_are_consistent: bool = True,
-        only_{{ component_name_snake }}_objects_in_{{ composite_name_snake }}s: bool = True,
-        all_parents_are_{{ composite_name_snake }}s: bool = True,
+        only_graphic_objects_in_groups: bool = True,
+        all_parents_are_groups: bool = True,
         leaf_has_no_children: bool = True,
         components_are_unique: bool = True,
         ids_are_unique: bool = True,
         names_are_unique: bool = True,
-        all_{{ composite_name_snake }}s_use_deny_policy: bool = False,
+        all_groups_use_deny_policy: bool = False,
         max_one_parent: bool = True,
-        condition_func_in_all_conditional_{{ composite_name_snake }}s: bool = True
+        condition_func_in_all_conditional_groups: bool = True
     ) -> None:
         """
         Validates the structure of the component by delegating to the Validator.
@@ -123,15 +123,15 @@ class {{ component_name }}(ABC):
             no_circular_references=no_circular_references,
             no_parent_duplication_conflict=no_parent_duplication_conflict,
             parent_child_relationships_are_consistent=parent_child_relationships_are_consistent,
-            only_{{ component_name_snake }}_objects_in_{{ composite_name_snake }}s=only_{{ component_name_snake }}_objects_in_{{ composite_name_snake }}s,
-            all_parents_are_{{ composite_name_snake }}s=all_parents_are_{{ composite_name_snake }}s,
+            only_graphic_objects_in_groups=only_graphic_objects_in_groups,
+            all_parents_are_groups=all_parents_are_groups,
             leaf_has_no_children=leaf_has_no_children,
             components_are_unique=components_are_unique,
             ids_are_unique=ids_are_unique,
             names_are_unique=names_are_unique,
-            all_{{ composite_name_snake }}s_use_deny_policy=all_{{ composite_name_snake }}s_use_deny_policy,
+            all_groups_use_deny_policy=all_groups_use_deny_policy,
             max_one_parent=max_one_parent,
-            condition_func_in_all_conditional_{{ composite_name_snake }}s=condition_func_in_all_conditional_{{ composite_name_snake }}s
+            condition_func_in_all_conditional_groups=condition_func_in_all_conditional_groups
         )
 
     def export_to_pickle(self, path: str) -> None:
@@ -139,17 +139,17 @@ class {{ component_name }}(ABC):
         self._loader.export_to_pickle(self, path)
 
     @classmethod
-    def import_from_pickle(cls, path: str) -> '{{ component_name }}':
+    def import_from_pickle(cls, path: str) -> 'Graphic':
         """Imports a component structure from a pickle file."""
         return cls._loader.import_from_pickle(path)
 
-    def clone(self) -> '{{ component_name }}':
+    def clone(self) -> 'Graphic':
         """Create a step-by-step clone of this component, assigning a new ID to the clone and its children."""
         cloned_component = self.__class__.__new__(self.__class__)
         
         for attr_name, attr_value in self.__dict__.items():
             if attr_name == '_id':
-                setattr(cloned_component, '_id', {{ component_name }}._generate_id())
+                setattr(cloned_component, '_id', Graphic._generate_id())
             else:
                 setattr(cloned_component, attr_name, attr_value)
         
