@@ -7,7 +7,7 @@ class ConcreteLeafFileCreator:
         self.filename = filename
         self.helper = Helper(filename, root_module)
 
-    def create_concrete_leaf_files(self, project_structure, leaf_name):
+    def create_concrete_leaf_file(self, project_structure, leaf_name):
         # Load the template
         template_path = os.path.join(
             os.path.dirname(__file__),

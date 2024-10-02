@@ -126,7 +126,7 @@ class CompositeProjectCreator:
                 f"{Helper.convert_to_snake_case(leaf)}.py"
             )
             leaf_creator = ConcreteLeafFileCreator(leaf_filename, self.root_module)
-            leaf_creator.create_concrete_leaf_files(self.project_structure)
+            leaf_creator.create_concrete_leaf_file(self.project_structure, leaf)
 
         # Create test files for leaves using TestFileCreator
         for leaf in self.project_structure['leaves']:
