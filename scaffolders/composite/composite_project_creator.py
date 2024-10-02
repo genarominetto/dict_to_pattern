@@ -154,5 +154,5 @@ if __name__ == "__main__":
     }
 
     # Pass "dir.sub_dir" as the root module as specified
-    creator = CompositeProjectCreator("CompositeProject", project_structure, "dir.sub_dir")
+    creator = CompositeProjectCreator("CompositeProject", project_structure, "")
     creator.create_project()

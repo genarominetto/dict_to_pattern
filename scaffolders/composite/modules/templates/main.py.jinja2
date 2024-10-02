@@ -1,0 +1,48 @@
+{% set component_import_path = root_module + '.' + component_name.lower() + '.components.' %}
+{% set composite_import_path = component_import_path + 'composite.' + composite_name.lower() %}
+{% set leaves_import_path = component_import_path + 'leaves.' %}
+
+from {{ composite_import_path }} import {{ composite_name }}
+{% for leaf in leaves %}
+from {{ leaves_import_path }}{{ leaf.lower() }} import {{ leaf }}
+{% endfor %}
+
+if __name__ == "__main__":
+    {% for leaf in leaves %}
+    {{ leaf.lower() }}1 = {{ leaf }}(name="{{ leaf }}1"{% for prop in leaf_properties %}, {{ prop.name }}={{ prop.value }}{% endfor %})
+    {{ leaf.lower() }}2 = {{ leaf }}(name="{{ leaf }}2"{% for prop in leaf_properties %}, {{ prop.name }}={{ prop.value }}{% endfor %})
+    {% endfor %}
+    
+    {{ composite_name.lower() }}1 = {{ composite_name }}(name="{{ composite_name }}1")
+    {{ composite_name.lower() }}2 = {{ composite_name }}(name="{{ composite_name }}2")
+
+    {% for leaf in leaves %}
+    {{ composite_name.lower() }}1.add({{ leaf.lower() }}1)
+    {% endfor %}
+    {% for leaf in leaves %}
+    {{ composite_name.lower() }}2.add({{ leaf.lower() }}2)
+    {% endfor %}
+
+    {{ composite_name.lower() }}1.remove({{ leaves[0].lower() }}1)
+
+    {{ composite_name.lower() }}1.add({{ composite_name.lower() }}2)
+    
+    def get_{{ component_name.lower() }}_name({{ component_name.lower() }}):
+        return {{ component_name.lower() }}.name
+    
+    {{ leaves[0].lower() }}_names = {{ composite_name.lower() }}1.execute_operation_recursively(
+        operation_func=get_{{ component_name.lower() }}_name,
+        condition_func=isinstance,
+        condition_args=({{ leaves[0] }},)
+    )
+    depth = {{ composite_name.lower() }}1.calculate_depth()
+    
+    print({{ composite_name.lower() }}1)
+    print(f"Is {{ composite_name.lower() }}1 composite? {{ '{' }}{{ composite_name.lower() }}1.is_composite(){{ '}' }})")
+    {% if 'is_active' in leaf_properties | map(attribute='name') | list %}
+    print(f"Does {{ composite_name.lower() }}1 have any active elements? {{ '{' }}{{ composite_name.lower() }}1.any_active(){{ '}' }})")
+    {% endif %}
+    print(f"{{ composite_name }}1 ID: {{ '{' }}{{ composite_name.lower() }}1.id{{ '}' }})")
+    print(f"Number of children in {{ composite_name.lower() }}1: {{ '{' }}len({{ composite_name.lower() }}1.get_children()){{ '}' }})")
+    print(f"{{ leaves[0] }} names in {{ composite_name.lower() }}1: {{ '{' }}{{ leaves[0].lower() }}_names{{ '}' }})")
+    print(f"Depth of {{ composite_name.lower() }}1 hierarchy: {{ '{' }}depth{{ '}' }})")
