@@ -1,10 +1,10 @@
 import pytest
-from {{ root_module }}.{{ component_name_lower }}.abstract.{{ component_name_lower }} import {{ component_name }}
-from {{ root_module }}.{{ component_name_lower }}.components.leaves.abstract.leaf import Leaf
+from {{ root_module }}{{ component_name_lower }}.abstract.{{ component_name_lower }} import {{ component_name }}
+from {{ root_module }}{{ component_name_lower }}.components.leaves.abstract.leaf import Leaf
 {% for leaf in leaves %}
-from {{ root_module }}.{{ component_name_lower }}.components.leaves.{{ leaf.lower() }} import {{ leaf }}
+from {{ root_module }}{{ component_name_lower }}.components.leaves.{{ leaf.lower() }} import {{ leaf }}
 {% endfor %}
-from {{ root_module }}.{{ component_name_lower }}.components.composite.{{ composite_name_lower }} import {{ composite_name }}
+from {{ root_module }}{{ component_name_lower }}.components.composite.{{ composite_name_lower }} import {{ composite_name }}
 
 
 # Methods being tested:

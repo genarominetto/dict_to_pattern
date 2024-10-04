@@ -1,12 +1,14 @@
 from typing import Callable, List, Optional, Any, Dict, Union
-from {{ root_module }}{{ component_name_snake }}.abstract.{{ component_name_snake }} import {{ component_name }}
+from graphic.abstract.graphic import Graphic
 
-class Leaf({{ component_name }}):
-    def __init__(self, name: str{% for prop in properties %}, {{ prop.name }}: {{ prop.type }}{% endfor %}):
+class Leaf(Graphic):
+    def __init__(self, name: str, size: int, is_active: bool):
         self.name = name
-{% for prop in properties %}
-        self.{{ prop.name }} = {{ prop.name }}
-{% endfor %}
+
+        self.size = size
+
+        self.is_active = is_active
+
         super().__init__(name=self.name)
 
     def get_structure_as_dict(self) -> Dict:
@@ -14,16 +16,16 @@ class Leaf({{ component_name }}):
 
     def __str__(self, level=0) -> str:
         indent = "    " * level
-{% if properties %}
+
         properties_list = [
-{% for prop in properties %}
-            f"{{ prop.name }}: {{ '{{' }}self.{{ prop.name }}{{ '}}' }}"{% if not loop.last %},{% endif %}
-{% endfor %}
+
+            f"size: {{self.size}}",
+
+            f"is_active: {{self.is_active}}"
+
         ]
         properties_str = "(" + ", ".join(properties_list) + ")"
-{% else %}
-        properties_str = ""
-{% endif %}
+
         return f"{indent}{self.name}{properties_str}"
 
     def __hash__(self):
@@ -35,16 +37,16 @@ class Leaf({{ component_name }}):
     def is_leaf(self) -> bool:
         return True
 
-{% for method in bool_methods %}
-    def {{ method.method_name }}(self) -> bool:
-        return self.{{ method.property_name }}
 
-{% endfor %}
+    def any_active(self) -> bool:
+        return self.is_active
+
+
     def get_components_recursively(
         self,
-        condition_func: Optional[Callable[['{{ component_name }}', Any], bool]] = None,
+        condition_func: Optional[Callable[['Graphic', Any], bool]] = None,
         condition_args: Union[tuple, Any] = ()
-    ) -> List['{{ component_name }}']:
+    ) -> List['Graphic']:
         if condition_func:
             if condition_func(self, *self._ensure_tuple(condition_args)):
                 return [self]
@@ -54,16 +56,16 @@ class Leaf({{ component_name }}):
 
     def remove_components_recursively(
         self,
-        condition_func: Callable[['{{ component_name }}', Any], bool],
+        condition_func: Callable[['Graphic', Any], bool],
         condition_args: Union[tuple, Any] = ()
-    ) -> List['{{ component_name }}']:
+    ) -> List['Graphic']:
         return []
 
     def execute_operation_recursively(
         self,
-        operation_func: Callable[['{{ component_name }}', Any], Any],
+        operation_func: Callable[['Graphic', Any], Any],
         operation_args: Union[tuple, Any] = (),
-        condition_func: Optional[Callable[['{{ component_name }}', Any], bool]] = None,
+        condition_func: Optional[Callable[['Graphic', Any], bool]] = None,
         condition_args: Union[tuple, Any] = (),
     ) -> List[Any]:
         operation_args = self._ensure_tuple(operation_args)
@@ -77,8 +79,8 @@ class Leaf({{ component_name }}):
     def calculate_depth(self) -> int:
         return 1  # A leaf has a depth of 1
 
-    def add(self, component: '{{ component_name }}') -> None:
+    def add(self, component: 'Graphic') -> None:
         raise NotImplementedError("Cannot add components to a leaf.")
 
-    def remove(self, component: '{{ component_name }}') -> None:
+    def remove(self, component: 'Graphic') -> None:
         raise NotImplementedError("Cannot remove components from a leaf.")

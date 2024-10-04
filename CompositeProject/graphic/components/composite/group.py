@@ -1,8 +1,8 @@
 from enum import Enum
 from typing import Callable, List, Optional, Any, Dict, Union
-from {{ root_module }}{{ component_name_snake }}.abstract.{{ component_name_snake }} import {{ component_name }}
+from graphic.abstract.graphic import Graphic
 
-class {{ composite_name }}({{ component_name }}):
+class Group(Graphic):
     class DuplicatePolicy(Enum):
         ALLOW_MULTIPLE_PARENTS = "ALLOW_MULTIPLE_PARENTS"
         DENY_MULTIPLE_PARENTS = "DENY_MULTIPLE_PARENTS"
@@ -13,20 +13,20 @@ class {{ composite_name }}({{ component_name }}):
         'no_circular_references': True,
         'no_parent_duplication_conflict': True,
         'parent_child_relationships_are_consistent': True,
-        'only_{{ component_name_snake }}_objects_in_{{ composite_name_snake }}s': True,
-        'all_parents_are_{{ composite_name_snake }}s': True,
+        'only_graphic_objects_in_groups': True,
+        'all_parents_are_groups': True,
         'leaf_has_no_children': True,
         'components_are_unique': True,
         'ids_are_unique': True,
         'names_are_unique': True,
-        'all_{{ composite_name_snake }}s_use_deny_policy': True,
+        'all_groups_use_deny_policy': True,
         'max_one_parent': True,
-        'condition_func_in_all_conditional_{{ composite_name_snake }}s': True
+        'condition_func_in_all_conditional_groups': True
     }
 
     def __init__(self, name: str, 
-                 duplicate_policy: Optional['{{ composite_name }}.DuplicatePolicy'] = None, 
-                 condition_func: Optional[Callable[['{{ component_name }}', '{{ component_name }}'], bool]] = None):
+                 duplicate_policy: Optional['Group.DuplicatePolicy'] = None, 
+                 condition_func: Optional[Callable[['Graphic', 'Graphic'], bool]] = None):
         """
         :param name: Name of the composite.
         :param duplicate_policy: Enum value determining if duplicate parents are allowed.
@@ -34,10 +34,10 @@ class {{ composite_name }}({{ component_name }}):
                                Only required if using ALLOW_NEW_PARENT_IF.
         """
         super().__init__(name)  # Pass the name to the base component class constructor
-        self.duplicate_policy = duplicate_policy or {{ composite_name }}.DuplicatePolicy.DENY_MULTIPLE_PARENTS
+        self.duplicate_policy = duplicate_policy or Group.DuplicatePolicy.DENY_MULTIPLE_PARENTS
         self.condition_func = condition_func
 
-        if self.duplicate_policy == {{ composite_name }}.DuplicatePolicy.ALLOW_NEW_PARENT_IF and not self.condition_func:
+        if self.duplicate_policy == Group.DuplicatePolicy.ALLOW_NEW_PARENT_IF and not self.condition_func:
             raise ValueError("You must provide a condition_func when using ALLOW_NEW_PARENT_IF policy.")
 
     def get_structure_as_dict(self) -> Dict:
@@ -64,16 +64,16 @@ class {{ composite_name }}({{ component_name }}):
     def is_leaf(self) -> bool:
         return False
 
-{% for method_name in bool_methods %}
-    def {{ method_name }}(self) -> bool:
-        return any(child.{{ method_name }}() for child in self.get_children())
-{% endfor %}
+
+    def any_active(self) -> bool:
+        return any(child.any_active() for child in self.get_children())
+
 
     def get_components_recursively(
         self,
-        condition_func: Optional[Callable[['{{ component_name }}', Any], bool]] = None,
+        condition_func: Optional[Callable[['Graphic', Any], bool]] = None,
         condition_args: Union[tuple, Any] = (),
-    ) -> List['{{ component_name }}']:
+    ) -> List['Graphic']:
         condition_args = self._ensure_tuple(condition_args)
         matching_components = []
 
@@ -91,15 +91,15 @@ class {{ composite_name }}({{ component_name }}):
 
     def remove_components_recursively(
         self,
-        condition_func: Optional[Callable[['{{ component_name }}', Any], bool]] = None,
+        condition_func: Optional[Callable[['Graphic', Any], bool]] = None,
         condition_args: Union[tuple, Any] = ()
-    ) -> List['{{ component_name }}']:
+    ) -> List['Graphic']:
         condition_args = self._ensure_tuple(condition_args)
         removed_components = []
 
         for child in self.get_children()[:]:
             # If the child is a composite, recursively remove components
-            if isinstance(child, {{ composite_name }}):
+            if isinstance(child, Group):
                 removed_components.extend(child.remove_components_recursively(condition_func, condition_args))
             
             # If no condition_func is provided, remove the component, otherwise check the condition
@@ -112,9 +112,9 @@ class {{ composite_name }}({{ component_name }}):
 
     def execute_operation_recursively(
         self,
-        operation_func: Callable[['{{ component_name }}', Any], Any],
+        operation_func: Callable[['Graphic', Any], Any],
         operation_args: Union[tuple, Any] = (),
-        condition_func: Optional[Callable[['{{ component_name }}', Any], bool]] = None,
+        condition_func: Optional[Callable[['Graphic', Any], bool]] = None,
         condition_args: Union[tuple, Any] = (),
     ) -> List[Any]:
         operation_args = self._ensure_tuple(operation_args)
@@ -142,7 +142,7 @@ class {{ composite_name }}({{ component_name }}):
     def calculate_depth(self) -> int:
         return 1 + max(child.calculate_depth() for child in self.get_children()) if self.get_children() else 1  # Composites with no children return 1
 
-    def add(self, component: '{{ component_name }}') -> None:
+    def add(self, component: 'Graphic') -> None:
         # Perform composite-level validation logic before adding
         self._validate_composite_logic(component)
 
@@ -158,7 +158,7 @@ class {{ composite_name }}({{ component_name }}):
             self._undo_add(component)
             raise ValueError(f"Error adding {component.name} to {self.name}: Validation failed: {str(validation_error)}")
 
-    def remove(self, component: '{{ component_name }}') -> None:
+    def remove(self, component: 'Graphic') -> None:
         # Perform composite-level validation logic before removing
         self._validate_remove_logic(component)
 
@@ -175,37 +175,37 @@ class {{ composite_name }}({{ component_name }}):
             self._undo_remove(component)
             raise ValueError(f"Error removing {component.name} from {self.name}: Validation failed: {str(validation_error)}")
 
-    def _validate_composite_logic(self, component: '{{ component_name }}') -> None:
+    def _validate_composite_logic(self, component: 'Graphic') -> None:
         """
         Perform duplicate parent checks and other composite-level validations based on policies.
         """
         # Check the policies of all existing parents (composites) of the component
         for parent in component.get_parents():
-            if parent.duplicate_policy == {{ composite_name }}.DuplicatePolicy.DENY_MULTIPLE_PARENTS:
+            if parent.duplicate_policy == Group.DuplicatePolicy.DENY_MULTIPLE_PARENTS:
                 raise ValueError(f"Error: {parent.name} has the policy DENY_MULTIPLE_PARENTS, "
                                  "which denies adding multiple parents.")
 
-            if parent.duplicate_policy == {{ composite_name }}.DuplicatePolicy.ALLOW_NEW_PARENT_IF:
+            if parent.duplicate_policy == Group.DuplicatePolicy.ALLOW_NEW_PARENT_IF:
                 if not parent.condition_func or not parent.condition_func(parent, component):
                     raise ValueError(f"Error: Condition for adding {component.name} to {parent.name} was not satisfied.")
 
         # Check the policy of the current composite (self)
-        if self.duplicate_policy == {{ composite_name }}.DuplicatePolicy.DENY_MULTIPLE_PARENTS and component.get_parents():
+        if self.duplicate_policy == Group.DuplicatePolicy.DENY_MULTIPLE_PARENTS and component.get_parents():
             raise ValueError(f"Error: {self.name} has the policy DENY_MULTIPLE_PARENTS, "
                              "and this component already has a parent.")
 
-        if self.duplicate_policy == {{ composite_name }}.DuplicatePolicy.ALLOW_NEW_PARENT_IF:
+        if self.duplicate_policy == Group.DuplicatePolicy.ALLOW_NEW_PARENT_IF:
             if not self.condition_func or not self.condition_func(self, component):
                 raise ValueError(f"Error: Condition for adding {component.name} to {self.name} was not satisfied.")
 
-    def _validate_remove_logic(self, component: '{{ component_name }}') -> None:
+    def _validate_remove_logic(self, component: 'Graphic') -> None:
         """
         Validation logic specifically for remove operation. Skips checks for multiple parents.
         """
         if component not in self.get_children():
             raise ValueError(f"Error: {component.name} is not a child of {self.name}, cannot remove.")
 
-    def _undo_add(self, component: '{{ component_name }}') -> None:
+    def _undo_add(self, component: 'Graphic') -> None:
         """
         Rollback the add operation directly by updating parents and children.
         """
@@ -213,7 +213,7 @@ class {{ composite_name }}({{ component_name }}):
             component.get_parents().remove(self)
             self.get_children().remove(component)
 
-    def _undo_remove(self, component: '{{ component_name }}') -> None:
+    def _undo_remove(self, component: 'Graphic') -> None:
         """
         Rollback the remove operation directly by updating parents and children.
         """
@@ -224,4 +224,4 @@ class {{ composite_name }}({{ component_name }}):
         """
         Validate the structure of the component using class-level validation settings.
         """
-        self._validator.validate_structure(**{{ composite_name }}.validation_settings)
+        self._validator.validate_structure(**Group.validation_settings)

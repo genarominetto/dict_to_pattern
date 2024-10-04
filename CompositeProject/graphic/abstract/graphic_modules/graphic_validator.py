@@ -1,8 +1,8 @@
 from typing import Set
 
-class {{ component_name }}Validator:
+class GraphicValidator:
     """
-    Responsible for validating the structure of {{ component_name }} components recursively from the root.
+    Responsible for validating the structure of Graphic components recursively from the root.
     """
 
     def __init__(self, component):
@@ -12,15 +12,15 @@ class {{ component_name }}Validator:
         no_circular_references: bool = True,
         no_parent_duplication_conflict: bool = True,
         parent_child_relationships_are_consistent: bool = True,
-        only_{{ component_name_snake }}_objects_in_{{ composite_name_snake }}s: bool = True,
-        all_parents_are_{{ composite_name_snake }}s: bool = True,
+        only_graphic_objects_in_groups: bool = True,
+        all_parents_are_groups: bool = True,
         leaf_has_no_children: bool = True,
         components_are_unique: bool = True,
         ids_are_unique: bool = True,
         names_are_unique: bool = True,
-        all_{{ composite_name_snake }}s_use_deny_policy: bool = True,
+        all_groups_use_deny_policy: bool = True,
         max_one_parent: bool = True,
-        condition_func_in_all_conditional_{{ composite_name_snake }}s: bool = True
+        condition_func_in_all_conditional_groups: bool = True
     ):
         """Recursively validates the structure of the component starting from the root."""
 
@@ -34,11 +34,11 @@ class {{ component_name }}Validator:
         if parent_child_relationships_are_consistent:
             self._validate_parent_child_relationships()
 
-        if only_{{ component_name_snake }}_objects_in_{{ composite_name_snake }}s:
-            self._validate_only_{{ component_name_snake }}_objects_in_{{ composite_name_snake }}s()
+        if only_graphic_objects_in_groups:
+            self._validate_only_graphic_objects_in_groups()
 
-        if all_parents_are_{{ composite_name_snake }}s:
-            self._validate_all_parents_are_{{ composite_name_snake }}s()
+        if all_parents_are_groups:
+            self._validate_all_parents_are_groups()
 
         if leaf_has_no_children:
             self._validate_leaf_has_no_children()
@@ -55,16 +55,16 @@ class {{ component_name }}Validator:
             seen_names = set()
             self._validate_names_unique(seen_names)
 
-        if all_{{ composite_name_snake }}s_use_deny_policy:
-            self._validate_all_{{ composite_name_snake }}s_use_deny_policy()
+        if all_groups_use_deny_policy:
+            self._validate_all_groups_use_deny_policy()
 
         if max_one_parent:
             self._validate_max_one_parent()
 
-        if condition_func_in_all_conditional_{{ composite_name_snake }}s:
-            self._validate_condition_func_in_conditional_{{ composite_name_snake }}s()
+        if condition_func_in_all_conditional_groups:
+            self._validate_condition_func_in_conditional_groups()
 
-    def _validate_no_circular_references(self, visited: Set['{{ component_name }}']):
+    def _validate_no_circular_references(self, visited: Set['Graphic']):
         """Check recursively for circular references."""
         component = self.component
         if component in visited:
@@ -91,23 +91,23 @@ class {{ component_name }}Validator:
                 raise ValueError(f"Parent-child inconsistency between {component.name} and {child.name}.")
             child._validator._validate_parent_child_relationships()
 
-    def _validate_only_{{ component_name_snake }}_objects_in_{{ composite_name_snake }}s(self):
-        """Check that only {{ component_name }} objects exist within {{ composite_name }}s."""
+    def _validate_only_graphic_objects_in_groups(self):
+        """Check that only Graphic objects exist within Groups."""
         component = self.component
-        from {{ root_module }}{{ component_name_snake }}.abstract.{{ component_name_snake }} import {{ component_name }}
-        if not all(isinstance(child, {{ component_name }}) for child in component.get_children()):
-            raise ValueError(f"{{ composite_name }} {component.name} contains non-{{ component_name_lower }} children.")
+        from graphic.abstract.graphic import Graphic
+        if not all(isinstance(child, Graphic) for child in component.get_children()):
+            raise ValueError(f"Group {component.name} contains non-graphic children.")
         for child in component.get_children():
-            child._validator._validate_only_{{ component_name_snake }}_objects_in_{{ composite_name_snake }}s()
+            child._validator._validate_only_graphic_objects_in_groups()
 
-    def _validate_all_parents_are_{{ composite_name_snake }}s(self):
-        """Ensure all parents of a component are {{ composite_name }} objects."""
+    def _validate_all_parents_are_groups(self):
+        """Ensure all parents of a component are Group objects."""
         component = self.component
         for parent in component.get_parents():
-            if not self._is_{{ composite_name_lower }}_instance(parent):
-                raise ValueError(f"Component {component.name} (id {component.id}) has a non-{{ composite_name_lower }} parent.")
+            if not self._is_group_instance(parent):
+                raise ValueError(f"Component {component.name} (id {component.id}) has a non-group parent.")
         for child in component.get_children():
-            child._validator._validate_all_parents_are_{{ composite_name_snake }}s()
+            child._validator._validate_all_parents_are_groups()
 
     def _validate_leaf_has_no_children(self):
         """Ensure leaf components do not have children."""
@@ -117,7 +117,7 @@ class {{ component_name }}Validator:
         for child in component.get_children():
             child._validator._validate_leaf_has_no_children()
 
-    def _validate_components_unique(self, seen_components: Set['{{ component_name }}']):
+    def _validate_components_unique(self, seen_components: Set['Graphic']):
         """Check if all components are unique."""
         component = self.component
         if component in seen_components:
@@ -144,13 +144,13 @@ class {{ component_name }}Validator:
         for child in component.get_children():
             child._validator._validate_names_unique(seen_names)
 
-    def _validate_all_{{ composite_name_snake }}s_use_deny_policy(self):
-        """Ensure all {{ composite_name_lower }}s use the DENY_MULTIPLE_PARENTS policy."""
+    def _validate_all_groups_use_deny_policy(self):
+        """Ensure all groups use the DENY_MULTIPLE_PARENTS policy."""
         component = self.component
-        if self._is_{{ composite_name_lower }}_instance(component) and component.duplicate_policy != self._get_duplicate_policy().DENY_MULTIPLE_PARENTS:
-            raise ValueError(f"{{ composite_name }} {component.name} does not use DENY_MULTIPLE_PARENTS policy.")
+        if self._is_group_instance(component) and component.duplicate_policy != self._get_duplicate_policy().DENY_MULTIPLE_PARENTS:
+            raise ValueError(f"Group {component.name} does not use DENY_MULTIPLE_PARENTS policy.")
         for child in component.get_children():
-            child._validator._validate_all_{{ composite_name_snake }}s_use_deny_policy()
+            child._validator._validate_all_groups_use_deny_policy()
 
     def _validate_max_one_parent(self):
         """Ensure each component has at most one parent."""
@@ -160,26 +160,26 @@ class {{ component_name }}Validator:
         for child in component.get_children():
             child._validator._validate_max_one_parent()
 
-    def _validate_condition_func_in_conditional_{{ composite_name_snake }}s(self):
-        """Ensure all {{ composite_name_lower }}s with ALLOW_NEW_PARENT_IF have a condition_func defined."""
+    def _validate_condition_func_in_conditional_groups(self):
+        """Ensure all groups with ALLOW_NEW_PARENT_IF have a condition_func defined."""
         component = self.component
-        if self._is_{{ composite_name_lower }}_instance(component) and component.duplicate_policy == self._get_duplicate_policy().ALLOW_NEW_PARENT_IF:
+        if self._is_group_instance(component) and component.duplicate_policy == self._get_duplicate_policy().ALLOW_NEW_PARENT_IF:
             if component.condition_func is None:
-                raise ValueError(f"{{ composite_name }} {component.name} (id {component.id}) uses ALLOW_NEW_PARENT_IF but has no condition_func defined.")
+                raise ValueError(f"Group {component.name} (id {component.id}) uses ALLOW_NEW_PARENT_IF but has no condition_func defined.")
         for child in component.get_children():
-            child._validator._validate_condition_func_in_conditional_{{ composite_name_snake }}s()
+            child._validator._validate_condition_func_in_conditional_groups()
 
-    def _is_{{ composite_name_lower }}_instance(self, component: '{{ component_name }}') -> bool:
-        """Helper method to dynamically check if a component is a {{ composite_name }}."""
-        from {{ root_module }}{{ component_name_snake }}.components.composite.{{ composite_name_snake }} import {{ composite_name }}
-        return isinstance(component, {{ composite_name }})
+    def _is_group_instance(self, component: 'Graphic') -> bool:
+        """Helper method to dynamically check if a component is a Group."""
+        from graphic.components.composite.group import Group
+        return isinstance(component, Group)
 
-    def _is_leaf_instance(self, component: '{{ component_name }}') -> bool:
+    def _is_leaf_instance(self, component: 'Graphic') -> bool:
         """Helper method to dynamically check if a component is a Leaf."""
-        from {{ root_module }}{{ component_name_snake }}.components.leaves.abstract.leaf import Leaf
+        from graphic.components.leaves.abstract.leaf import Leaf
         return isinstance(component, Leaf)
 
     def _get_duplicate_policy(self):
         """Helper method to dynamically import DuplicatePolicy."""
-        from {{ root_module }}{{ component_name_snake }}.components.composite.{{ composite_name_snake }} import {{ composite_name }}
-        return {{ composite_name }}.DuplicatePolicy
+        from graphic.components.composite.group import Group
+        return Group.DuplicatePolicy

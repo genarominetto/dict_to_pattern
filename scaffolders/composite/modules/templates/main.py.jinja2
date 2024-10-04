@@ -1,4 +1,4 @@
-{% set component_import_path = root_module + '.' + component_name.lower() + '.components.' %}
+{% set component_import_path = root_module + component_name.lower() + '.components.' %}
 {% set composite_import_path = component_import_path + 'composite.' + composite_name.lower() %}
 {% set leaves_import_path = component_import_path + 'leaves.' %}
 
