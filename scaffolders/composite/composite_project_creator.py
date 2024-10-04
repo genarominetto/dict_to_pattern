@@ -51,13 +51,12 @@ class StructureHelper:
             'abstract_leaf_dir': abstract_leaf_dir,
             'tests_dir': tests_dir
         }
-
 class CompositeProjectCreator:
     def __init__(self, project_name, project_structure, root_module):
         self.project_name = project_name
         self.project_structure = project_structure
         self.structure_helper = StructureHelper(project_structure)
-        self.root_module = root_module  # Add root_module attribute
+        self.root_module = root_module
 
     def create_project(self):
         # Delete the project directory if it exists
@@ -135,7 +134,7 @@ class CompositeProjectCreator:
                 f"test_{Helper.convert_to_snake_case(leaf)}.py"
             )
             test_creator = TestFileCreator(test_filename, self.root_module)
-            test_creator.create_test_file(self.project_structure)
+            test_creator.create_test_file(self.project_structure, leaf)
 
         # Create main.py file using MainFileCreator
         main_filename = os.path.join(self.project_name, 'main.py')
@@ -153,6 +152,6 @@ if __name__ == "__main__":
         }
     }
 
-    # Pass "dir.sub_dir" as the root module as specified
+    # Pass "" as the root module
     creator = CompositeProjectCreator("CompositeProject", project_structure, "")
     creator.create_project()

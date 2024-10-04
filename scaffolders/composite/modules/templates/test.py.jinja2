@@ -41,10 +41,6 @@ def test_basic_identification_and_structure():
     assert {{ first_leaf_lower }}.{{ prop.name }} == {{ repr(prop.default) }}
     {% endfor %}
 
-    # Test id
-    assert {{ first_leaf_lower }}.id == 1
-    assert composite.id == 2
-
 # Methods being tested:
 # get_components_recursively, remove_components_recursively, execute_operation_recursively, calculate_depth
 

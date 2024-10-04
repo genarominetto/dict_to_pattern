@@ -36,7 +36,7 @@ class DataLoader:
         renumber(component)
 
     def _regenerate_ids(self, component: '{{ component_name }}') -> None:
-        from {{ root_module }}.{{ component_name_snake }}.abstract.{{ component_name_snake }} import {{ component_name }}
+        from {{ root_module }}{{ component_name_snake }}.abstract.{{ component_name_snake }} import {{ component_name }}
         """Regenerates the ids for all components in the structure using the _generate_id method."""
         def regenerate(comp):
             comp._id = {{ component_name }}._generate_id()  # Regenerate the id

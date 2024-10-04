@@ -7,7 +7,7 @@ class TestFileCreator:
         self.filename = filename
         self.helper = Helper(filename, root_module)
 
-    def create_test_file(self, project_structure):
+    def create_test_file(self, project_structure, leaf_name):
         # Load the template
         template_path = os.path.join(
             os.path.dirname(__file__),
@@ -50,8 +50,8 @@ class TestFileCreator:
             'composite_name': composite_name,
             'composite_name_lower': composite_name.lower(),
             'leaves': leaves,
-            'first_leaf': leaves[0],
-            'first_leaf_lower': leaves[0].lower(),
+            'first_leaf': leaf_name,
+            'first_leaf_lower': leaf_name.lower(),
             'properties': properties,
             'leaf_args': leaf_args,
             'root_module': root_module,
