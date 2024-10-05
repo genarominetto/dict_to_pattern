@@ -16,16 +16,16 @@ class Leaf(Graphic):
 
     def __str__(self, level=0) -> str:
         indent = "    " * level
-
+    
         properties_list = [
-
-            f"size: {{self.size}}",
-
-            f"is_active: {{self.is_active}}"
-
+    
+            f"size: {self.size}",
+    
+            f"is_active: {self.is_active}"
+    
         ]
         properties_str = "(" + ", ".join(properties_list) + ")"
-
+    
         return f"{indent}{self.name}{properties_str}"
 
     def __hash__(self):

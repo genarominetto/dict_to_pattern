@@ -14,16 +14,16 @@ class Leaf({{ component_name }}):
 
     def __str__(self, level=0) -> str:
         indent = "    " * level
-{% if properties %}
+    {% if properties %}
         properties_list = [
-{% for prop in properties %}
-            f"{{ prop.name }}: {{ '{{' }}self.{{ prop.name }}{{ '}}' }}"{% if not loop.last %},{% endif %}
-{% endfor %}
+    {% for prop in properties %}
+            f"{{ prop.name }}: {{ '{' }}self.{{ prop.name }}{{ '}' }}"{% if not loop.last %},{% endif %}
+    {% endfor %}
         ]
         properties_str = "(" + ", ".join(properties_list) + ")"
-{% else %}
+    {% else %}
         properties_str = ""
-{% endif %}
+    {% endif %}
         return f"{indent}{self.name}{properties_str}"
 
     def __hash__(self):
