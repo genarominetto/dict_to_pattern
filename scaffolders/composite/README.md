@@ -65,9 +65,7 @@ project_structure = {
 
 ```python
 from graphic.components.composite.group import Group
-
 from graphic.components.leaves.circle import Circle
-
 from graphic.components.leaves.square import Square
 
 
