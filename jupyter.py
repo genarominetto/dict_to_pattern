@@ -5,6 +5,7 @@ import subprocess
 import sys
 import importlib
 
+
 def format_code_with_black(directory):
     """
     Formats all Python (.py) files in the given directory and its subdirectories using Black.
@@ -18,10 +19,12 @@ def format_code_with_black(directory):
         for file in files:
             if file.endswith(".py"):
                 file_path = os.path.join(root, file)
-                print(f"Formatting {file_path} with Black...")
                 
                 # Run black formatter on the file
                 subprocess.run(["black", file_path])
+
+    print("Code formatting complete.")
+
 
 def compress_and_download(dir_path):
     # Get the directory name
@@ -102,6 +105,7 @@ def print_directory_tree(directory: str):
     print('.')
     _tree(directory)
     print(f'\n{dir_count} directories, {file_count} files')
+
 
 class ModuleManager:
     def __init__(self, module_paths: dict):
