@@ -11,7 +11,7 @@
 
 ## Overview
 
-The **Composite Scaffolder** constructs programs that align with the Composite design pattern. Modify the dict values to customize the program as needed.
+The **Composite Scaffolder** constructs programs that align with the Composite design pattern. Modify the `project_structure` dict values to customize the program as needed.
 
 ## How to Use
 
