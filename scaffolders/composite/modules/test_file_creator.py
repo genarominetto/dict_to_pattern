@@ -27,6 +27,12 @@ class TestFileCreator:
         leaf_properties = project_structure.get('leaf_properties', {})
         root_module = self.helper.root_module
 
+        # Convert names to snake_case
+        component_name_snake = Helper.convert_to_snake_case(component_name)
+        composite_name_snake = Helper.convert_to_snake_case(composite_name)
+        leaves_snake = [Helper.convert_to_snake_case(leaf) for leaf in leaves]
+        first_leaf_snake = Helper.convert_to_snake_case(leaf_name)
+
         # Prepare properties for the leaf
         property_names = list(leaf_properties.keys())
         property_types = [self.helper.infer_type(type(value)) for value in leaf_properties.values()]
@@ -47,15 +53,20 @@ class TestFileCreator:
         context = {
             'component_name': component_name,
             'component_name_lower': component_name.lower(),
+            'component_name_snake': component_name_snake,
             'composite_name': composite_name,
             'composite_name_lower': composite_name.lower(),
+            'composite_name_snake': composite_name_snake,
             'leaves': leaves,
+            'leaves_snake': leaves_snake,
             'first_leaf': leaf_name,
             'first_leaf_lower': leaf_name.lower(),
+            'first_leaf_snake': first_leaf_snake,
             'properties': properties,
             'leaf_args': leaf_args,
             'root_module': root_module,
-            'repr': repr
+            'repr': repr,
+            'zip': zip
         }
 
         # Render the template

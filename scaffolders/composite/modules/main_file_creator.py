@@ -26,6 +26,11 @@ class MainFileCreator:
         leaves = project_structure['leaves']
         leaf_properties = project_structure.get('leaf_properties', {})
 
+        # Convert names to snake_case
+        component_name_snake = Helper.convert_to_snake_case(component_name)
+        composite_name_snake = Helper.convert_to_snake_case(composite_name)
+        leaves_snake = [Helper.convert_to_snake_case(leaf) for leaf in leaves]
+
         # Collect property names and default values
         property_assignments = []
         for name, value in leaf_properties.items():
@@ -40,10 +45,14 @@ class MainFileCreator:
 
         context = {
             'component_name': component_name,
+            'component_name_snake': component_name_snake,
             'composite_name': composite_name,
+            'composite_name_snake': composite_name_snake,
             'leaves': leaves,
+            'leaves_snake': leaves_snake,
             'leaf_properties': property_assignments,
             'root_module': self.helper.root_module,
+            'zip': zip
         }
 
         # Render the template
