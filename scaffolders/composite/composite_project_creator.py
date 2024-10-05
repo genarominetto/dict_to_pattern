@@ -11,11 +11,16 @@ from modules.main_file_creator import MainFileCreator
 from modules.simple_file_creator import SimpleFileCreator
 from modules.test_file_creator import TestFileCreator
 
-
 class StructureHelper:
     def __init__(self, project_structure, root_module=''):
         self.project_structure = project_structure
-        self.root_module = root_module
+        self.root_module = self._ensure_trailing_dot(root_module)
+
+    def _ensure_trailing_dot(self, module_name):
+        """Ensure the root_module ends with a dot if it's not empty."""
+        if module_name and not module_name.endswith('.'):
+            return module_name + '.'
+        return module_name
 
     def create_directory_structure(self, root_path):
         # Extract names from project_structure
@@ -28,7 +33,7 @@ class StructureHelper:
 
         # Parse root_module into directory path
         if self.root_module:
-            # Remove any trailing '.' and split by '.'
+            # Remove the trailing '.' and split by '.'
             root_module_dirs = self.root_module.rstrip('.').split('.')
         else:
             root_module_dirs = []
@@ -69,8 +74,14 @@ class CompositeProjectCreator:
     def __init__(self, project_name, project_structure, root_module):
         self.project_name = project_name
         self.project_structure = project_structure
-        self.root_module = root_module
-        self.structure_helper = StructureHelper(project_structure, root_module)
+        self.root_module = self._ensure_trailing_dot(root_module)
+        self.structure_helper = StructureHelper(project_structure, self.root_module)
+
+    def _ensure_trailing_dot(self, module_name):
+        """Ensure the root_module ends with a dot if it's not empty."""
+        if module_name and not module_name.endswith('.'):
+            return module_name + '.'
+        return module_name
 
     def create_project(self):
         # Delete the project directory if it exists
@@ -168,5 +179,5 @@ if __name__ == "__main__":
     }
 
     # Pass "dir_a.dir_b." as the root module
-    creator = CompositeProjectCreator("CompositeProject", project_structure, "dir_a.dir_b.")
+    creator = CompositeProjectCreator("CompositeProject", project_structure, "dir_a.dir_b")
     creator.create_project()
