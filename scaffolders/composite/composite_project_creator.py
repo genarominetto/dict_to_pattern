@@ -155,3 +155,25 @@ if __name__ == "__main__":
     # Pass "" as the root module
     creator = CompositeProjectCreator("CompositeProject", project_structure, "")
     creator.create_project()
+
+
+
+    project_structure = {
+        "component": "InfrastructureComponent",
+        "composite": "StackComposite",
+        "leaves": ["VirtualMachine", "ObjectStorage", "Queue"],
+        "leaf_properties": {
+            "key_pair": "example",
+            "is_allowed_to_queue": False,
+            "is_encrypted": True,
+            "is_protected": True,
+            "subscribers" : ["example1", "example2"],
+            "fixed_subscribers" : ("fixed_example1", "fixed_example2")
+
+
+        }
+    }
+
+    # Pass "" as the root module
+    creator = CompositeProjectCreator("Terraform", project_structure, "")
+    creator.create_project()

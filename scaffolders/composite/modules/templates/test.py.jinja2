@@ -49,7 +49,7 @@ def test_basic_identification_and_structure():
 
 def test_recursive_operations():
     {{ composite_name }}.validation_settings.update({
-        'all_{{ composite_name_lower }}s_use_deny_policy': False,
+        'all_{{ composite_name_snake }}s_use_deny_policy': False,
         'max_one_parent': False
     })
 
@@ -223,15 +223,15 @@ def test_structure_manipulation_with_duplicate_policies():
         'no_circular_references': True,
         'no_parent_duplication_conflict': True,
         'parent_child_relationships_are_consistent': True,
-        'only_{{ component_name_snake }}_objects_in_{{ composite_name_lower }}s': True,
-        'all_parents_are_{{ composite_name_lower }}s': True,
+        'only_{{ component_name_snake }}_objects_in_{{ composite_name_snake }}s': True,
+        'all_parents_are_{{ composite_name_snake }}s': True,
         'leaf_has_no_children': True,
         'components_are_unique': True,
         'ids_are_unique': True,
         'names_are_unique': True,
-        'all_{{ composite_name_lower }}s_use_deny_policy': True,
+        'all_{{ composite_name_snake }}s_use_deny_policy': True,
         'max_one_parent': True,
-        'condition_func_in_all_conditional_{{ composite_name_lower }}s': True
+        'condition_func_in_all_conditional_{{ composite_name_snake }}s': True
     })
     composite2.validate_structure()
     
@@ -262,7 +262,7 @@ def test_serialization_deserialization():
     composite.add({{ first_leaf_lower }})
     
     # Define file paths
-    composite_file = "test_{{ composite_name_lower }}.pkl"
+    composite_file = "test_{{ composite_name_snake }}.pkl"
     leaf_file = "test_{{ first_leaf_lower }}.pkl"
 
     try:

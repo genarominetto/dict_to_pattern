@@ -22,11 +22,11 @@ class Helper:
         elif value_type == str:
             return 'str'
         elif value_type == list:
-            return 'List[Any]'
+            return 'list'
         elif value_type == dict:
-            return 'Dict[str, Any]'
+            return 'dict'
         else:
-            return 'Any'
+            return 'any'
         
     @staticmethod
     def convert_to_snake_case(name):
