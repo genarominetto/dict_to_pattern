@@ -2,7 +2,7 @@
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/genarominetto/dict_to_pattern/blob/main/main.ipynb)
 
-This is a scaffolder (code project generator) solution to create complete python template programs with tests from simple dictionaries. The idea is to create one scaffolder for each design pattern in the book **"[Design Patterns](https://en.wikipedia.org/wiki/Design_Patterns)"**. The project currently includes three scaffolders:
+This is a scaffolder (code project generator) solution to create complete python template programs with tests from simple dictionaries. The idea is to create one scaffolder for each design pattern in the book **"[Design Patterns](https://en.wikipedia.org/wiki/Design_Patterns)"**. The project currently includes 4 scaffolders:
 
 1. [**Builder Scaffolder**](scaffolders/builder/): Creates programs that align with the Builder design pattern. Use it to separate the construction of a complex object from its representation.
 2. [**Facade Scaffolder**](scaffolders/facade/): Creates programs that align with the Facade design pattern. Use it to provide a unified interface to a set of interfaces in a subsystem.
