@@ -11,9 +11,11 @@ from modules.main_file_creator import MainFileCreator
 from modules.simple_file_creator import SimpleFileCreator
 from modules.test_file_creator import TestFileCreator
 
+
 class StructureHelper:
-    def __init__(self, project_structure):
+    def __init__(self, project_structure, root_module=''):
         self.project_structure = project_structure
+        self.root_module = root_module
 
     def create_directory_structure(self, root_path):
         # Extract names from project_structure
@@ -24,8 +26,18 @@ class StructureHelper:
         component_name_snake = Helper.convert_to_snake_case(component_name)
         composite_name_snake = Helper.convert_to_snake_case(composite_name)
 
-        # Define directories based on the component name
-        component_root_dir = os.path.join(root_path, component_name_snake)
+        # Parse root_module into directory path
+        if self.root_module:
+            # Remove any trailing '.' and split by '.'
+            root_module_dirs = self.root_module.rstrip('.').split('.')
+        else:
+            root_module_dirs = []
+
+        # Define the base path for the component directory
+        component_base_path = os.path.join(root_path, *root_module_dirs)
+
+        # Now define directories based on the component name
+        component_root_dir = os.path.join(component_base_path, component_name_snake)
         abstract_dir = os.path.join(component_root_dir, 'abstract')
         abstract_modules_dir = os.path.join(abstract_dir, f'{component_name_snake}_modules')
         components_dir = os.path.join(component_root_dir, 'components')
@@ -51,12 +63,14 @@ class StructureHelper:
             'abstract_leaf_dir': abstract_leaf_dir,
             'tests_dir': tests_dir
         }
+
+
 class CompositeProjectCreator:
     def __init__(self, project_name, project_structure, root_module):
         self.project_name = project_name
         self.project_structure = project_structure
-        self.structure_helper = StructureHelper(project_structure)
         self.root_module = root_module
+        self.structure_helper = StructureHelper(project_structure, root_module)
 
     def create_project(self):
         # Delete the project directory if it exists
@@ -141,6 +155,7 @@ class CompositeProjectCreator:
         main_creator = MainFileCreator(main_filename, self.root_module)
         main_creator.create_main_file(self.project_structure)
 
+
 if __name__ == "__main__":
     project_structure = {
         "component": "Graphic",
@@ -152,28 +167,6 @@ if __name__ == "__main__":
         }
     }
 
-    # Pass "" as the root module
-    creator = CompositeProjectCreator("CompositeProject", project_structure, "")
-    creator.create_project()
-
-
-
-    project_structure = {
-        "component": "InfrastructureComponent",
-        "composite": "StackComposite",
-        "leaves": ["VirtualMachine", "ObjectStorage", "Queue"],
-        "leaf_properties": {
-            "key_pair": "example",
-            "is_allowed_to_queue": False,
-            "is_encrypted": True,
-            "is_protected": True,
-            "subscribers" : ["example1", "example2"],
-            "fixed_subscribers" : ("fixed_example1", "fixed_example2")
-
-
-        }
-    }
-
-    # Pass "" as the root module
-    creator = CompositeProjectCreator("Terraform", project_structure, "")
+    # Pass "dir_a.dir_b." as the root module
+    creator = CompositeProjectCreator("CompositeProject", project_structure, "dir_a.dir_b.")
     creator.create_project()
