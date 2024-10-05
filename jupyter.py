@@ -2,7 +2,8 @@ import shutil
 import os
 from google.colab import files
 import subprocess
-
+import sys
+import importlib
 
 def compress_and_download(dir_path):
     # Get the directory name
@@ -83,3 +84,70 @@ def print_directory_tree(directory: str):
     print('.')
     _tree(directory)
     print(f'\n{dir_count} directories, {file_count} files')
+
+class ModuleManager:
+    def __init__(self, module_paths: dict):
+        """
+        Initialize the ModuleManager with a dictionary of module names and their paths.
+        """
+        self.module_paths = module_paths  # e.g., {'facade': '/path/to/facade', ...}
+        self.current_module_name = None
+        self.current_module_path = None
+        self.project_creator_class = None
+        self.sys_modules_keys_snapshot = set(sys.modules.keys())
+
+    def set_module(self, module_name: str):
+        """
+        Set the active module by name. This will handle adding/removing paths and modules.
+        """
+        if module_name not in self.module_paths:
+            raise ValueError(f"Module '{module_name}' not found in module_paths.")
+
+        # Remove current module path and modules if a module is already set
+        if self.current_module_name is not None:
+            self._remove_current_module()
+
+        # Add new module path
+        module_path = self.module_paths[module_name]
+        sys.path.insert(0, module_path)
+        self.current_module_path = module_path
+        self.current_module_name = module_name
+
+        # Take a snapshot of sys.modules keys before importing
+        self.sys_modules_keys_snapshot = set(sys.modules.keys())
+
+        # Import the module(s)
+        self._import_module(module_name)
+
+    def _import_module(self, module_name: str):
+        """
+        Import the necessary modules for the specified module name.
+        """
+        # Build the module import path
+        module_import_path = f'dict_to_pattern.scaffolders.{module_name}.{module_name}_project_creator'
+        module = importlib.import_module(module_import_path)
+        class_name = ''.join([word.capitalize() for word in module_name.split('_')]) + 'ProjectCreator'
+        project_creator_class = getattr(module, class_name)
+        # Store the class for external access
+        self.project_creator_class = project_creator_class
+
+    def _remove_current_module(self):
+        """
+        Remove the modules imported after the snapshot and the module's path.
+        """
+        # Remove the module's path from sys.path
+        if self.current_module_path in sys.path:
+            sys.path.remove(self.current_module_path)
+
+        # Find all modules added since the snapshot
+        current_sys_modules_keys = set(sys.modules.keys())
+        new_modules = current_sys_modules_keys - self.sys_modules_keys_snapshot
+
+        # Remove the new modules from sys.modules
+        for module_name in new_modules:
+            del sys.modules[module_name]
+
+        # Reset current module variables
+        self.current_module_name = None
+        self.current_module_path = None
+        self.project_creator_class = None
