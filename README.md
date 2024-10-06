@@ -27,4 +27,4 @@ Generate Python programs from simple dictionaries using design patterns from the
 ### Customize Your Project:
 
 - Edit the `project_structure` dict to generate your own templates.
-- Update `root_module` for submodules (e.g., `root_module = "my_module.my_sub_module"`).
+- Update `root_module` to make the new project a submodule of an existing program (e.g., `root_module = "my_module.my_sub_module"`).
