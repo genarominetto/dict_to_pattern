@@ -49,14 +49,14 @@ project_structure = {
 │   ├── components
 │   │   ├── composite
 │   │   │   └── group.py
-│   │   ├── leaves
-│   │   │   ├── abstract
-│   │   │   │   └── leaf.py
-│   │   │   ├── circle.py
-│   │   │   └── square.py
-│   ├── tests
-│   │   ├── test_circle.py
-│   │   └── test_square.py
+│   │   └── leaves
+│   │       ├── abstract
+│   │       │   └── leaf.py
+│   │       ├── circle.py
+│   │       └── square.py
+│   └── tests
+│       ├── test_circle.py
+│       └── test_square.py
 ├── main.py
 └── pytest.ini
 ```
