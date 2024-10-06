@@ -78,30 +78,32 @@ def print_directory_tree(directory: str):
     """
     file_count = 0
     dir_count = 0
-    
-    def _tree(dir_path, indent=''):
+
+    def _tree(dir_path, prefix=''):
         nonlocal file_count, dir_count
         # Get list of directories and files
         items = sorted(os.listdir(dir_path))
-        dirs = [d for d in items if os.path.isdir(os.path.join(dir_path, d)) and not d.startswith('_') and not d.startswith('.')]
-        files = [f for f in items if os.path.isfile(os.path.join(dir_path, f)) and not f.startswith('_') and not f.startswith('.')]
-        
-        # Increment directory count
+        # Filter out hidden files and directories starting with '_'
+        items = [item for item in items if not item.startswith('_') and not item.startswith('.')]
+        # Separate directories and files
+        dirs = [d for d in items if os.path.isdir(os.path.join(dir_path, d))]
+        files = [f for f in items if os.path.isfile(os.path.join(dir_path, f))]
+
+        # Increment directory and file counts
         dir_count += len(dirs)
         file_count += len(files)
-        
-        # Print directories
-        for i, d in enumerate(dirs):
-            print(f'{indent}├── {d}')
-            _tree(os.path.join(dir_path, d), indent + '│   ')
-        
-        # Print files
-        for i, f in enumerate(files):
-            if i == len(files) - 1:
-                print(f'{indent}└── {f}')
-            else:
-                print(f'{indent}├── {f}')
-    
+
+        # Combine directories and files for iteration
+        entries = dirs + files
+        for index, entry in enumerate(entries):
+            path = os.path.join(dir_path, entry)
+            connector = '└── ' if index == len(entries) - 1 else '├── '
+            print(prefix + connector + entry)
+            if os.path.isdir(path):
+                # Determine the extension for the prefix
+                extension = '    ' if index == len(entries) - 1 else '│   '
+                _tree(path, prefix + extension)
+
     print('.')
     _tree(directory)
     print(f'\n{dir_count} directories, {file_count} files')
