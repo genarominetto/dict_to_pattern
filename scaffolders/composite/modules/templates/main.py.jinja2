@@ -39,9 +39,13 @@ if __name__ == "__main__":
     
     print({{ composite_name_snake }}1)
     print(f"Is {{ composite_name_snake }}1 composite? {{ '{' }}{{ composite_name_snake }}1.is_composite(){{ '}' }})")
-    {% if 'is_active' in leaf_properties | map(attribute='name') | list %}
-    print(f"Does {{ composite_name_snake }}1 have any active elements? {{ '{' }}{{ composite_name_snake }}1.any_active(){{ '}' }})")
-    {% endif %}
+    {% for prop in leaf_properties %}
+        {% if prop.name.startswith('is_') %}
+    print(f"Are there {{ prop.name[3:].replace('_', ' ') }} elements within {{ composite_name_snake }}1? {{ '{' }}{{ composite_name_snake }}1.any_{{ prop.name[3:] }}(){{ '}' }})")
+        {% else %}
+    print(f"Property '{{ prop.name }}' value in {{ composite_name_snake }}1: {{ '{' }}{{ composite_name_snake }}1.{{ prop.name }}{{ '}' }})")
+        {% endif %}
+    {% endfor %}
     print(f"{{ composite_name }}1 ID: {{ '{' }}{{ composite_name_snake }}1.id{{ '}' }})")
     print(f"Number of children in {{ composite_name_snake }}1: {{ '{' }}len({{ composite_name_snake }}1.get_children()){{ '}' }})")
     print(f"{{ leaves[0] }} names in {{ composite_name_snake }}1: {{ '{' }}{{ leaves_snake[0] }}_names{{ '}' }})")
