@@ -7,7 +7,7 @@ from modules.composite_file_creator import CompositeFileCreator
 from modules.concrete_leaf_file_creator import ConcreteLeafFileCreator
 from modules.data_loader_file_creator import DataLoaderFileCreator
 from modules.validator_file_creator import ValidatorFileCreator
-from modules.main_file_creator import MainFileCreator
+from modules.main_file_creator_cmp import MainFileCreator
 from modules.simple_file_creator import SimpleFileCreator
 from modules.test_file_creator import TestFileCreator
 
